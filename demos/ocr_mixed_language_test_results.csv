@@ -1,0 +1,4 @@
+﻿file,total_lines,chinese_lines,english_lines,mixed_lines,avg_confidence,high_confidence_ratio
+mixed_language_medical_doc.png,24,0,9,0,0.3709656099478404,0.375
+chinese_medical_document.png,21,0,0,0,0.36502164389405933,0.2857142857142857
+sample_medical_document.png,15,0,10,0,0.6530086636543274,0.6666666666666666
