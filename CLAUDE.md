@@ -4,7 +4,7 @@
 
 本项目是一个医疗文档OCR识别演示项目，使用PaddleOCR进行中文医疗文档的文字识别，并提供结构化的CSV输出。
 
-**当前版本**: v1.1.3 (修复示例文档生成和字体兼容性)  
+**当前版本**: v1.2.0 (实现本地测试运行环境)  
 **更新时间**: 2025-08-17
 
 ## 🛠️ 开发约定
@@ -49,20 +49,26 @@ python -m flake8 demos/ --max-line-length=100
 
 ### 依赖管理
 - 核心依赖: paddlepaddle, paddleocr, pandas, pillow, opencv-python
-- 开发依赖: mypy, flake8, jupyter
+- 开发依赖: mypy, flake8, jupyter, gradio
 - 保持依赖最新且兼容
+- **必须使用虚拟环境**: 项目强制要求使用Python虚拟环境隔离依赖
 
 ## 📁 项目结构
 
 ```
 claude-colab-projects/
-├── demos/                    # 演示项目目录
-│   └── medical-ocr-demo.ipynb  # 医疗OCR演示notebook
-├── .vscode/                  # VSCode配置
-│   └── settings.json         # IDE设置
-├── pyproject.toml           # Python项目配置
-├── requirements-dev.txt     # 开发依赖
-└── CLAUDE.md               # 本文件
+├── demos/                      # 演示项目目录
+│   └── medical-ocr-demo.ipynb    # 医疗OCR演示notebook
+├── venv/                       # Python虚拟环境目录
+├── .vscode/                    # VSCode配置
+│   └── settings.json             # IDE设置
+├── start_local.sh              # 本地环境一键启动脚本
+├── test_local_ocr.py           # 本地OCR功能测试
+├── gradio_demo.py              # Gradio界面演示
+├── README_LOCAL.md             # 本地运行指南
+├── pyproject.toml             # Python项目配置
+├── requirements-dev.txt       # 开发依赖
+└── CLAUDE.md                 # 本文件
 ```
 
 ## 🔧 IDE配置
@@ -77,21 +83,55 @@ claude-colab-projects/
 - 对项目代码进行严格的类型检查
 - 使用mypy进行静态类型分析
 
+## 🏠 本地开发环境
+
+### 虚拟环境管理
+- **强制要求**: 所有开发工作必须在Python虚拟环境中进行
+- **自动激活**: 启动脚本会自动创建和激活虚拟环境
+- **环境隔离**: 避免系统Python环境污染和依赖冲突
+- **版本一致**: 确保团队成员使用相同的依赖版本
+
+### 本地运行约定
+```bash
+# 1. 一键启动 (推荐方式)
+./start_local.sh
+
+# 2. 手动启动
+source venv/bin/activate && jupyter notebook
+
+# 3. 功能测试
+source venv/bin/activate && python test_local_ocr.py
+
+# 4. Web界面演示
+source venv/bin/activate && python gradio_demo.py
+```
+
+### 环境检查清单
+- ✅ Python 3.12+ 已安装
+- ✅ 虚拟环境已创建 (`venv/` 目录存在)
+- ✅ 依赖包已安装 (运行 `test_local_ocr.py` 验证)
+- ✅ GPU支持检测 (自动识别CUDA设备)
+- ✅ PaddleOCR模型已下载
+
 ## 📝 开发工作流
 
-1. **环境检查**: 确保所有依赖正确安装
+1. **环境准备**: 使用 `./start_local.sh` 确保虚拟环境就绪
 2. **代码修改**: 按照项目约定进行开发
-3. **质量检查**: 运行lint和typecheck
-4. **解决问题**: 修复所有IDE PROBLEMS
-5. **版本更新**: 同步更新CLAUDE.md和notebook中的版本号及描述
-6. **提交推送**: 使用规范的commit message
+3. **功能测试**: 运行 `test_local_ocr.py` 验证核心功能
+4. **质量检查**: 在虚拟环境中运行lint和typecheck
+5. **解决问题**: 修复所有IDE PROBLEMS
+6. **版本更新**: 同步更新CLAUDE.md和notebook中的版本号及描述
+7. **提交推送**: 使用规范的commit message
 
 ## 🚨 注意事项
 
+- **虚拟环境必须**: 禁止在系统Python环境中安装项目依赖
+- **启动脚本优先**: 优先使用 `./start_local.sh` 确保环境一致性
+- **环境验证**: 开发前运行 `test_local_ocr.py` 确保环境正确
 - 每次重大修改后需要重启IDE以刷新类型检查
-- 确保Jupyter notebook的兼容性
+- 确保Jupyter notebook在本地和Colab环境的兼容性
 - 保持中文注释和文档的准确性
-- 测试在Google Colab环境中的运行效果
+- GPU模式优先，CPU模式作为备用方案
 
 ## 📞 技术支持
 
