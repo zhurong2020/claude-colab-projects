@@ -1,27 +1,42 @@
-# 开发环境依赖 - 用于IDE智能提示
-# 这些包在Colab中会自动安装，本地开发时需要
+# 医疗OCR项目开发环境依赖
+# 用于本地开发，IDE智能提示和代码质量检查
+# Colab环境会自动安装大部分依赖
 
-# 核心依赖
-jupyter>=1.0.0
-ipython>=8.0.0
-pandas>=2.0.0
-numpy>=1.24.0
-matplotlib>=3.7.0
+# 版本信息
+# 项目版本: v1.2.0
+# Python要求: >=3.8
+# 更新时间: 2025-08-17
 
-# AI/ML 依赖
-torch>=2.0.0
-torchvision>=0.15.0
-paddlepaddle>=2.5.0
-paddleocr>=2.6.0
+# ====== 核心开发工具 ======
+jupyter>=1.0.0               # Jupyter Notebook环境
+ipython>=8.0.0               # 增强的Python交互式环境
+notebook>=7.0.0              # Jupyter Notebook服务器
 
-# 图像处理
-pillow>=9.5.0
-opencv-python>=4.8.0
+# ====== 数据处理 ======
+pandas>=2.0.0                # 数据分析和处理
+numpy>=1.24.0                # 数值计算基础库
+matplotlib>=3.7.0            # 数据可视化
 
-# 界面和交互
-gradio>=3.35.0
-requests>=2.30.0
-tqdm>=4.65.0
+# ====== AI/ML 核心依赖 ======
+torch>=2.0.0                 # PyTorch深度学习框架
+torchvision>=0.15.0          # PyTorch计算机视觉工具
+paddlepaddle>=2.5.0          # PaddlePaddle深度学习框架
+paddleocr>=2.6.0             # PaddleOCR文字识别引擎
 
-# Colab特定（本地不安装）
-# google-colab  # 仅在Colab中可用
+# ====== 图像处理 ======
+pillow>=9.5.0                # Python图像处理库
+opencv-python>=4.8.0         # OpenCV计算机视觉库
+
+# ====== Web界面和交互 ======
+gradio>=3.35.0               # Web界面构建工具
+requests>=2.30.0             # HTTP请求库
+tqdm>=4.65.0                 # 进度条显示
+
+# ====== 代码质量工具 ======
+mypy>=1.0.0                  # 静态类型检查
+flake8>=6.0.0                # 代码风格检查
+black>=23.0.0                # 代码格式化工具
+
+# ====== 特殊说明 ======
+# google-colab               # 仅在Colab中可用，本地不安装
+# notebook相关包在Colab中预装，本地需要显式安装

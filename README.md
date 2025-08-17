@@ -1,94 +1,131 @@
-# Claude Code + Google Colab 项目集合
+# 医疗文档OCR识别项目
 
-> 使用Claude Code开发，Google Colab运行的项目集合
+> 🏥 使用PaddleOCR进行中文医疗文档文字识别，支持本地开发和Colab运行
+
+**当前版本**: v1.2.0 (实现本地测试运行环境) | **更新时间**: 2025-08-17
 
 ## 🎯 项目概述
 
-这是一个多项目管理仓库，专注于：
-- **本地开发**: VSCode + Claude Code智能辅助
-- **云端运行**: Google Colab免费GPU资源
-- **便捷分享**: 一键生成Colab演示链接
-- **版本管理**: 完整的Git工作流支持
+这是一个医疗文档OCR识别演示项目，特色功能：
+- **高精度识别**: 基于PaddleOCR的中英文混合识别
+- **本地开发**: 完整的Python虚拟环境和一键启动
+- **云端运行**: Google Colab免费GPU资源支持
+- **Web界面**: Gradio交互式界面
+- **数据导出**: 结构化CSV格式输出
 
 ## 📁 项目结构
 
 ```
 claude-colab-projects/
-├── demos/                    # 演示项目（集中管理）
-├── standalone/               # 独立项目（完整结构）
-├── templates/               # 项目模板
-├── shared/                  # 共享资源
-├── tools/                   # 管理工具
-└── docs/                    # 文档
+├── demos/                      # 演示项目目录
+│   └── medical-ocr-demo.ipynb    # 医疗OCR演示notebook
+├── venv/                       # Python虚拟环境目录
+├── .vscode/                    # VSCode配置
+├── start_local.sh              # 本地环境一键启动脚本
+├── test_local_ocr.py           # 本地OCR功能测试
+├── gradio_demo.py              # Gradio界面演示
+├── README_LOCAL.md             # 本地运行指南
+├── requirements-dev.txt        # 开发依赖
+├── CLAUDE.md                   # 项目约定和配置
+└── tools/                      # 项目管理工具
 ```
 
 ## 🚀 快速开始
 
-### 创建新的演示项目
+### 本地运行（推荐）
 ```bash
-cd claude-colab-projects
-python tools/project_organizer.py demo your-project-name --desc "项目描述"
+# 一键启动（自动处理虚拟环境）
+./start_local.sh
+
+# 选择启动方式：
+# 1) Jupyter Notebook (默认)
+# 2) Gradio Web界面演示  
+# 3) 仅激活虚拟环境
 ```
 
-### 创建独立项目
+### Google Colab运行
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhurong2020/claude-colab-projects/blob/main/demos/medical-ocr-demo.ipynb)
+
+### 手动安装
 ```bash
-python tools/project_organizer.py standalone your-project-name --desc "项目描述"
+# 创建虚拟环境
+python3 -m venv venv
+source venv/bin/activate
+
+# 安装依赖
+pip install -r requirements-dev.txt
+
+# 运行测试
+python test_local_ocr.py
 ```
 
-### 同步到GitHub并生成Colab链接
-```bash
-python tools/sync_tool.py full username/repo-name -m "更新说明"
-```
+## ✨ 功能特性
 
-## 📓 演示项目
+### 🔍 OCR识别能力
+- **多语言支持**: 中英文混合识别
+- **高精度引擎**: 基于PaddleOCR v3.1+
+- **GPU加速**: 支持CUDA加速处理
+- **角度矫正**: 自动检测和矫正文档角度
 
-<!-- 演示项目列表会自动更新 -->
+### 📊 数据处理
+- **结构化输出**: 生成CSV格式报告
+- **置信度评估**: 每行文字的识别置信度
+- **批量处理**: 支持多图像文件处理
+- **错误处理**: 完善的异常处理机制
 
-## 🏗️ 独立项目
+### 🌐 用户界面
+- **Jupyter Notebook**: 交互式开发环境
+- **Gradio Web界面**: 用户友好的Web界面
+- **命令行工具**: 脚本化批量处理
+- **实时预览**: 识别结果即时显示
 
-<!-- 独立项目列表会自动更新 -->
+## 🛠️ 技术栈
 
-## 🛠️ 工具使用
+- **OCR引擎**: PaddleOCR 3.1+
+- **深度学习**: PaddlePaddle
+- **图像处理**: OpenCV, PIL
+- **数据处理**: Pandas
+- **Web界面**: Gradio
+- **开发环境**: Jupyter Notebook
+- **代码质量**: MyPy, Flake8
 
-### 项目管理工具
-```bash
-# 查看所有项目
-python tools/project_organizer.py list
+## 📖 使用场景
 
-# 生成Colab链接
-python tools/project_organizer.py links username/repo-name
-```
+- **医疗档案**: 病历、处方、检查报告数字化
+- **文档管理**: 纸质文档电子化归档
+- **数据录入**: 批量文字识别和录入
+- **质量控制**: OCR结果置信度评估
 
-### 同步工具
-```bash
-# 同步到GitHub
-python tools/sync_tool.py sync -m "提交信息"
+## 🔧 开发说明
 
-# 生成Colab链接
-python tools/sync_tool.py links username/repo-name
+### 环境要求
+- Python 3.8+
+- 2GB+ RAM (推荐4GB+)
+- GPU支持 (可选，提升处理速度)
 
-# 完整流程
-python tools/sync_tool.py full username/repo-name -m "提交信息"
-```
+### 代码质量
+- 遵循PEP 8代码风格
+- 类型注解完整
+- 单元测试覆盖
+- 文档字符串完备
 
-## 📖 开发工作流
+### 版本管理
+- 使用语义化版本号
+- 详细的提交信息
+- 分支管理策略
+- 自动化CI/CD
 
-1. **创建项目**: 使用项目管理工具创建新项目
-2. **本地开发**: 使用VSCode + Claude Code编辑代码
-3. **测试验证**: 本地或Colab中测试功能
-4. **同步分享**: 推送到GitHub并生成Colab链接
+## 📞 技术支持
 
-## 🎯 最佳实践
+- **GitHub仓库**: [zhurong2020/claude-colab-projects](https://github.com/zhurong2020/claude-colab-projects)
+- **问题反馈**: 通过GitHub Issues提交
+- **开发文档**: 查看 [CLAUDE.md](./CLAUDE.md) 了解开发约定
+- **本地运行**: 参考 [README_LOCAL.md](./README_LOCAL.md)
 
-- **演示项目**: 单一功能展示，代码简洁
-- **独立项目**: 完整功能实现，结构清晰
-- **版本管理**: 及时提交，清晰的提交信息
-- **文档编写**: 详细的使用说明和示例
+## 📄 许可证
 
-## 📞 联系方式
-
-如有问题或建议，欢迎反馈交流。
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
 
 ---
 
-*使用 Claude Code + Google Colab 构建 🚀*
+*使用 Claude Code 开发，支持本地和Colab运行 🚀*
