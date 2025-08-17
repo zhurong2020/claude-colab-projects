@@ -2,7 +2,7 @@
 
 > 🏥 使用PaddleOCR进行中文医疗文档文字识别，支持本地开发和Colab运行
 
-**当前版本**: v1.2.0 (实现本地测试运行环境) | **更新时间**: 2025-08-17
+**当前版本**: v1.3.0 (完成demos目录软件工程最佳实践重组) | **更新时间**: 2025-08-17
 
 ## 🎯 项目概述
 
@@ -17,17 +17,23 @@
 
 ```
 claude-colab-projects/
-├── demos/                      # 演示项目目录
-│   └── medical-ocr-demo.ipynb    # 医疗OCR演示notebook
-├── venv/                       # Python虚拟环境目录
-├── .vscode/                    # VSCode配置
-├── start_local.sh              # 本地环境一键启动脚本
-├── test_local_ocr.py           # 本地OCR功能测试
-├── gradio_demo.py              # Gradio界面演示
-├── README_LOCAL.md             # 本地运行指南
-├── requirements-dev.txt        # 开发依赖
-├── CLAUDE.md                   # 项目约定和配置
-└── tools/                      # 项目管理工具
+├── demos/                      # 演示应用目录
+│   ├── medical-ocr/           # 医疗OCR识别应用 (独立可运行)
+│   │   ├── medical-ocr-demo.ipynb  # 主演示notebook
+│   │   ├── gradio_demo.py          # Web界面版本
+│   │   ├── test_chinese_encoding_fix.py  # 中文编码测试
+│   │   └── assets/                 # 应用资源文件
+│   ├── shared/                # 共享资源和工具
+│   └── dev-tools/             # 开发辅助工具
+├── standalone/                # 大型独立项目目录
+├── shared/                    # 项目级共享资源
+├── tests/                     # 测试目录
+├── tools/                     # 项目管理工具
+├── venv/                      # Python虚拟环境
+├── .vscode/                   # VSCode配置
+├── start_local.sh             # 本地环境一键启动
+├── requirements-dev.txt       # 开发依赖
+└── CLAUDE.md                  # 项目约定和配置
 ```
 
 ## 🚀 快速开始
@@ -44,7 +50,7 @@ claude-colab-projects/
 ```
 
 ### Google Colab运行
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhurong2020/claude-colab-projects/blob/main/demos/medical-ocr-demo.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhurong2020/claude-colab-projects/blob/main/demos/medical-ocr/medical-ocr-demo.ipynb)
 
 ### 手动安装
 ```bash

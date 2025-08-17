@@ -4,7 +4,7 @@
 
 本项目是一个医疗文档OCR识别演示项目，使用PaddleOCR进行中文医疗文档的文字识别，并提供结构化的CSV输出。
 
-**当前版本**: v1.2.4 (完成中英文OCR测试和API修复)  
+**当前版本**: v1.3.0 (完成demos目录软件工程最佳实践重组)  
 **更新时间**: 2025-08-17
 
 ## 🛠️ 开发约定
@@ -53,37 +53,87 @@ python -m flake8 demos/ --max-line-length=100
 - 保持依赖最新且兼容
 - **必须使用虚拟环境**: 项目强制要求使用Python虚拟环境隔离依赖
 
-## 📁 项目结构
+## 📁 项目结构 (v1.3.0 重组后)
 
 ```
 claude-colab-projects/
-├── demos/                      # 演示项目目录
-│   ├── medical-ocr-demo.ipynb    # 医疗OCR演示notebook
-│   ├── gradio_demo.py            # Gradio界面演示
-│   └── samples/                  # 演示样本文件
-├── standalone/                 # 独立项目目录
-├── shared/                     # 共享资源目录
-│   ├── utils/                    # 通用工具函数
-│   └── assets/                   # 共享资源文件
-├── templates/                  # 项目模板目录
-├── tools/                      # 项目管理工具
-│   ├── project_organizer.py     # 项目智能组织工具
-│   └── sync_tool.py             # 同步工具
-├── tests/                      # 测试目录
-│   ├── unit/                     # 单元测试
-│   │   └── test_local_ocr.py     # 本地OCR功能测试
-│   ├── data/                     # 测试数据
+├── demos/                      # 演示应用目录 (多小型应用架构)
+│   ├── medical-ocr/           # 医疗OCR识别应用 (独立可运行)
+│   │   ├── medical-ocr-demo.ipynb  # 主演示notebook
+│   │   ├── gradio_demo.py          # Web界面版本
+│   │   ├── test_chinese_encoding_fix.py  # 中文编码测试
+│   │   ├── assets/                 # 应用专用资源
+│   │   │   ├── sample_docs/        # 示例医疗文档
+│   │   │   ├── results/           # OCR识别结果
+│   │   │   └── samples/           # 其他示例文件
+│   │   └── README.md              # 应用说明文档
+│   ├── shared/                # 共享资源和工具
+│   │   ├── utils/             # 通用工具函数
+│   │   ├── fonts/             # 共享字体文件
+│   │   └── templates/         # 共享模板
+│   ├── dev-tools/             # 开发辅助工具 (非演示)
+│   │   ├── generators/        # 文档生成器
+│   │   │   ├── create_chinese_medical_doc.py
+│   │   │   ├── create_mixed_document.py
+│   │   │   └── create_mixed_language_doc.py
+│   │   └── legacy-tests/      # 历史测试脚本
+│   │       ├── test_chinese_ocr.py
+│   │       ├── test_mixed_ocr_final.py
+│   │       └── test_ocr_fix.py
+│   └── README.md              # demos总导航文档
+├── standalone/                # 大型独立项目目录
+├── shared/                    # 项目级共享资源
+│   ├── utils/                 # 通用工具函数
+│   └── assets/                # 共享资源文件
+├── templates/                 # 项目模板目录
+├── tools/                     # 项目管理工具
+│   ├── project_organizer.py  # 项目智能组织工具
+│   └── sync_tool.py          # 同步工具
+├── tests/                     # 测试目录
+│   ├── unit/                  # 单元测试
+│   │   └── test_local_ocr.py  # 本地OCR功能测试
+│   ├── data/                  # 测试数据
 │   │   └── test_medical_doc.png  # 测试用医疗文档
-│   └── README.md                 # 测试说明
-├── docs/                       # 文档目录
-├── venv/                       # Python虚拟环境目录
-├── .vscode/                    # VSCode配置
+│   └── README.md              # 测试说明
+├── docs/                      # 文档目录
+├── venv/                      # Python虚拟环境目录
+├── .vscode/                   # VSCode配置
 ├── start_local.sh              # 本地环境一键启动脚本
 ├── README_LOCAL.md             # 本地运行指南
 ├── claude-colab-integration-guide.md # 集成指南
 ├── SESSION_HANDOVER.md         # 对话交接文档
 ├── requirements-dev.txt        # 开发依赖
 └── CLAUDE.md                   # 本文件
+```
+
+## 🏗️ 项目架构重组 (v1.3.0)
+
+### 重组背景
+v1.3.0进行了重大架构重构，将demos目录从杂乱的单一目录重组为面向多小型应用的清晰结构。
+
+### 设计原则
+1. **独立性**: 每个演示应用可独立在Google Colab中运行
+2. **可扩展性**: 便于添加新的演示应用
+3. **关注点分离**: 演示、开发工具、共享资源分离
+4. **Colab友好**: 结构适合云端同步和运行
+
+### 重组成果
+- ✅ **医疗OCR应用独立化**: `demos/medical-ocr/` 包含完整功能
+- ✅ **资源合理归类**: 图片、结果、工具分类存放
+- ✅ **开发工具分离**: 生成器和测试工具不干扰演示
+- ✅ **文档体系完善**: 多层级README导航系统
+- ✅ **路径引用优化**: 所有文件路径适配新结构
+
+### 应用结构规范
+每个演示应用目录应包含：
+```
+应用名称/
+├── 主演示文件.ipynb     # Jupyter notebook
+├── 辅助脚本.py          # 可选的Python脚本
+├── assets/              # 应用专用资源
+│   ├── sample_docs/     # 示例文档
+│   └── results/         # 输出结果
+└── README.md            # 应用说明
 ```
 
 ## 🔧 IDE配置
