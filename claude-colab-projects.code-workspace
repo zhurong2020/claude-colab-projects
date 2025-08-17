@@ -1,0 +1,44 @@
+{
+    "folders": [
+        {
+            "name": "claude-colab-projects",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "python.defaultInterpreterPath": "./venv/bin/python",
+        "python.terminal.activateEnvironment": true,
+        "python.terminal.activateEnvInCurrentTerminal": true,
+        "terminal.integrated.cwd": "${workspaceFolder}",
+        "terminal.integrated.env.linux": {
+            "PATH": "${workspaceFolder}/venv/bin:${env:PATH}"
+        },
+        "terminal.integrated.profiles.linux": {
+            "venv": {
+                "path": "/bin/bash",
+                "args": ["-c", "source ${workspaceFolder}/venv/bin/activate && exec bash"]
+            }
+        },
+        "terminal.integrated.defaultProfile.linux": "venv",
+        "files.exclude": {
+            "**/__pycache__": true,
+            "**/*.pyc": true,
+            "**/venv": false,
+            "**/.git": false
+        },
+        "search.exclude": {
+            "**/venv": true,
+            "**/node_modules": true,
+            "**/.git": true
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python",
+            "ms-python.pylint",
+            "ms-python.flake8",
+            "ms-toolsai.jupyter",
+            "ms-python.mypy-type-checker"
+        ]
+    }
+}

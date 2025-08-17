@@ -89,14 +89,25 @@ claude-colab-projects/
 ## 🔧 IDE配置
 
 ### VSCode设置
-- 启用Pylance类型检查
-- 配置Python解释器
-- 使用项目级别的设置覆盖全局设置
+- **Python解释器**: 自动配置为`./venv/bin/python`
+- **终端自动激活**: 新建终端自动激活虚拟环境
+- **调试配置**: 包含OCR演示和测试的预设配置
+- **任务配置**: 一键运行测试、类型检查、代码风格检查
+
+### IDE启动方式
+```bash
+# 方式1: 使用workspace文件（推荐）
+code claude-colab-projects.code-workspace
+
+# 方式2: 直接打开项目目录
+code .
+```
 
 ### 类型检查配置
 - 忽略第三方库的类型检查错误
 - 对项目代码进行严格的类型检查
 - 使用mypy进行静态类型分析
+- IDE终端自动显示虚拟环境提示符
 
 ## 🏠 本地开发环境
 
