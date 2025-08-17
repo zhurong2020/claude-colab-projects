@@ -4,11 +4,9 @@ Claude Code 项目智能组织工具
 专注于集中管理演示项目的快速创建和管理
 """
 
-import os
 import json
 import subprocess
 from pathlib import Path
-from typing import Dict, Any
 
 class ProjectOrganizer:
     def __init__(self, base_dir: str = "/home/wuxia/projects/claude-colab-projects"):

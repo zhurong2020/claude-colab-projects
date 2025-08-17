@@ -4,7 +4,6 @@ Claude Code + Colab 快速同步工具
 简化的项目同步和Colab链接生成
 """
 
-import os
 import subprocess
 import argparse
 from pathlib import Path
