@@ -53,7 +53,7 @@ def create_simple_gradio_demo():
         examples=[
             [demo_image]
         ],
-        theme=gr.themes.Soft()
+        theme="soft"
     )
 
     return interface

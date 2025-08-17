@@ -68,3 +68,25 @@ checkpoints/
 *.temp
 temp/
 tmp/
+
+# Medical OCR Demo generated files
+demos/sample_medical_document.png
+demos/temp_uploaded_image.png
+demos/demo_image.png
+demos/chinese_medical_document.png
+demos/ocr_results*.csv
+demos/*_ocr_results.csv
+demos/test_chinese_ocr.py
+demos/test_ocr_fix.py
+
+# Gradio temporary files
+demos/.gradio/
+demos/flagged/
+
+# Demo output files
+demos/*.png
+demos/*.jpg
+demos/*.jpeg
+!demos/samples/*.png
+!demos/samples/*.jpg
+!demos/samples/*.jpeg
