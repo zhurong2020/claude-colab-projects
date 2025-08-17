@@ -1,0 +1,27 @@
+# 开发环境依赖 - 用于IDE智能提示
+# 这些包在Colab中会自动安装，本地开发时需要
+
+# 核心依赖
+jupyter>=1.0.0
+ipython>=8.0.0
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+
+# AI/ML 依赖
+torch>=2.0.0
+torchvision>=0.15.0
+paddlepaddle>=2.5.0
+paddleocr>=2.6.0
+
+# 图像处理
+pillow>=9.5.0
+opencv-python>=4.8.0
+
+# 界面和交互
+gradio>=3.35.0
+requests>=2.30.0
+tqdm>=4.65.0
+
+# Colab特定（本地不安装）
+# google-colab  # 仅在Colab中可用
