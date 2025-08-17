@@ -104,14 +104,14 @@ case $choice in
         echo "🌐 启动Gradio Web界面..."
         echo "💡 访问 http://localhost:7860 查看界面"
         echo "🛑 按 Ctrl+C 停止服务"
-        cd demos && python gradio_demo.py
+        cd demos/medical-ocr && python gradio_demo.py
         ;;
     3)
         echo "⚡ 虚拟环境已激活，可以手动运行命令"
         echo "💡 使用以下命令："
         echo "   - 测试功能: cd tests/unit && python test_local_ocr.py"
         echo "   - 启动Jupyter: jupyter notebook"
-        echo "   - 启动Gradio: cd demos && python gradio_demo.py"
+        echo "   - 启动Gradio: cd demos/medical-ocr && python gradio_demo.py"
         echo "🛑 输入 'deactivate' 退出虚拟环境"
         bash
         ;;
@@ -122,12 +122,12 @@ case $choice in
         echo ""
         
         # 检查notebook是否存在
-        if [ ! -f "demos/medical-ocr-demo.ipynb" ]; then
-            echo "❌ notebook文件不存在: demos/medical-ocr-demo.ipynb"
+        if [ ! -f "demos/medical-ocr/medical-ocr-demo.ipynb" ]; then
+            echo "❌ notebook文件不存在: demos/medical-ocr/medical-ocr-demo.ipynb"
             echo "💡 启动Jupyter主界面..."
             jupyter notebook
         else
-            jupyter notebook demos/medical-ocr-demo.ipynb
+            jupyter notebook demos/medical-ocr/medical-ocr-demo.ipynb
         fi
         ;;
 esac

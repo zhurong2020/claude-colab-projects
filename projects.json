@@ -1,8 +1,12 @@
 {
   "medical-ocr-demo": {
     "type": "demo",
-    "location": "/home/wuxia/projects/claude-colab-projects/demos/medical-ocr-demo.ipynb",
-    "description": "医疗文档图像文字识别演示 - 使用PaddleOCR从医疗文档PNG图像中提取文本并保存为CSV",
-    "created_date": "2025-08-16T22:11:51.998738"
+    "location": "/home/wuxia/projects/claude-colab-projects/demos/medical-ocr/medical-ocr-demo.ipynb",
+    "description": "医疗文档图像文字识别演示 - 支持中英文混合识别，完整的独立应用架构",
+    "created_date": "2025-08-16T22:11:51.998738",
+    "updated_date": "2025-08-17T16:30:00.000000",
+    "version": "v1.3.0",
+    "structure": "independent-app",
+    "colab_ready": true
   }
 }

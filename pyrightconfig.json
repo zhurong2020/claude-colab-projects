@@ -24,6 +24,6 @@
     "reportOptionalOperand": false,
     "reportUnusedImport": "information",
     "reportUnusedVariable": "information",
-    "pythonVersion": "3.8",
+    "pythonVersion": "3.12",
     "pythonPlatform": "Linux"
 }
