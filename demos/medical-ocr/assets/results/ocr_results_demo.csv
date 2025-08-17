@@ -1,0 +1,16 @@
+﻿file_name,line_number,extracted_text,confidence
+sample_medical_document.png,1,MEDICAL REPORT,0.9752
+sample_medical_document.png,2,Hospital: Xx City People's Hospital,0.9816
+sample_medical_document.png,3,LOGO,0.9979
+sample_medical_document.png,4,Patient: Zhang San,0.9892
+sample_medical_document.png,5,Gender: Male,0.9806
+sample_medical_document.png,6,Age: 45,0.9351
+sample_medical_document.png,7,Department: Cardiology,0.9781
+sample_medical_document.png,8,Doctor: Dr. Li,0.9774
+sample_medical_document.png,9,"Diagnosis: Hypertension, Diabetes",0.9804
+sample_medical_document.png,10,Prescription:,0.9998
+sample_medical_document.png,11,1. Antihypertensive 10mg daily,0.9883
+sample_medical_document.png,12,2. Antidiabetic 5mg twice daily,0.9908
+sample_medical_document.png,13,Doctor Signature: Dr. Li,0.9386
+sample_medical_document.png,14,Date: 2025-08-17,0.9553
+sample_medical_document.png,15,Signature,0.9996

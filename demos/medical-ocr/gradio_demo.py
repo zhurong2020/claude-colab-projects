@@ -31,7 +31,7 @@ def create_simple_gradio_demo():
         draw.text((50, 80), "医疗OCR演示图像", fill='black')
         draw.text((50, 120), "Medical OCR Demo", fill='blue')
 
-        demo_path = 'demo_image.png'
+        demo_path = 'assets/sample_docs/demo_image.png'
         img.save(demo_path)
         return demo_path
 

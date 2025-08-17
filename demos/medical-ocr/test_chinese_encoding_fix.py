@@ -143,7 +143,7 @@ def create_test_chinese_document():
             draw.text((x_pos, y_pos), text, fill='black', font=font)
             y_pos += 60
         
-        output_path = 'test_chinese_simple.png'
+        output_path = 'assets/sample_docs/test_chinese_simple.png'
         img.save(output_path, quality=95)
         print(f"✅ 中文测试文档已创建: {output_path}")
         return output_path
@@ -264,7 +264,7 @@ def test_ocr_with_encoding_fix():
                 for i, item in enumerate(extracted_texts, 1)
             ])
             
-            csv_path = 'chinese_ocr_encoding_test_results.csv'
+            csv_path = 'assets/results/chinese_ocr_encoding_test_results.csv'
             results_df.to_csv(csv_path, index=False, encoding='utf-8-sig')
             print(f"\n💾 结果已保存到: {csv_path}")
         
