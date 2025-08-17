@@ -81,12 +81,14 @@ fi
 
 # 环境验证
 echo "🧪 运行环境验证..."
+cd tests/unit
 python test_local_ocr.py > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     echo "✅ 环境验证通过"
 else
     echo "⚠️ 环境验证有警告，但将继续启动"
 fi
+cd ../..
 
 # 提供启动选项
 echo ""
@@ -102,14 +104,14 @@ case $choice in
         echo "🌐 启动Gradio Web界面..."
         echo "💡 访问 http://localhost:7860 查看界面"
         echo "🛑 按 Ctrl+C 停止服务"
-        python gradio_demo.py
+        cd demos && python gradio_demo.py
         ;;
     3)
         echo "⚡ 虚拟环境已激活，可以手动运行命令"
         echo "💡 使用以下命令："
-        echo "   - 测试功能: python test_local_ocr.py"
+        echo "   - 测试功能: cd tests/unit && python test_local_ocr.py"
         echo "   - 启动Jupyter: jupyter notebook"
-        echo "   - 启动Gradio: python gradio_demo.py"
+        echo "   - 启动Gradio: cd demos && python gradio_demo.py"
         echo "🛑 输入 'deactivate' 退出虚拟环境"
         bash
         ;;

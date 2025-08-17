@@ -58,17 +58,32 @@ python -m flake8 demos/ --max-line-length=100
 ```
 claude-colab-projects/
 ├── demos/                      # 演示项目目录
-│   └── medical-ocr-demo.ipynb    # 医疗OCR演示notebook
+│   ├── medical-ocr-demo.ipynb    # 医疗OCR演示notebook
+│   ├── gradio_demo.py            # Gradio界面演示
+│   └── samples/                  # 演示样本文件
+├── standalone/                 # 独立项目目录
+├── shared/                     # 共享资源目录
+│   ├── utils/                    # 通用工具函数
+│   └── assets/                   # 共享资源文件
+├── templates/                  # 项目模板目录
+├── tools/                      # 项目管理工具
+│   ├── project_organizer.py     # 项目智能组织工具
+│   └── sync_tool.py             # 同步工具
+├── tests/                      # 测试目录
+│   ├── unit/                     # 单元测试
+│   │   └── test_local_ocr.py     # 本地OCR功能测试
+│   ├── data/                     # 测试数据
+│   │   └── test_medical_doc.png  # 测试用医疗文档
+│   └── README.md                 # 测试说明
+├── docs/                       # 文档目录
 ├── venv/                       # Python虚拟环境目录
 ├── .vscode/                    # VSCode配置
-│   └── settings.json             # IDE设置
 ├── start_local.sh              # 本地环境一键启动脚本
-├── test_local_ocr.py           # 本地OCR功能测试
-├── gradio_demo.py              # Gradio界面演示
 ├── README_LOCAL.md             # 本地运行指南
-├── pyproject.toml             # Python项目配置
-├── requirements-dev.txt       # 开发依赖
-└── CLAUDE.md                 # 本文件
+├── claude-colab-integration-guide.md # 集成指南
+├── SESSION_HANDOVER.md         # 对话交接文档
+├── requirements-dev.txt        # 开发依赖
+└── CLAUDE.md                   # 本文件
 ```
 
 ## 🔧 IDE配置
@@ -100,10 +115,10 @@ claude-colab-projects/
 source venv/bin/activate && jupyter notebook
 
 # 3. 功能测试
-source venv/bin/activate && python test_local_ocr.py
+source venv/bin/activate && cd tests/unit && python test_local_ocr.py
 
 # 4. Web界面演示
-source venv/bin/activate && python gradio_demo.py
+source venv/bin/activate && cd demos && python gradio_demo.py
 ```
 
 ### 环境检查清单

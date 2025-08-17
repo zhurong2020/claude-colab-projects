@@ -92,7 +92,7 @@ def create_test_image():
             y_pos += 60
 
         # 保存图像
-        test_image_path = 'test_medical_doc.png'
+        test_image_path = '../data/test_medical_doc.png'
         img.save(test_image_path)
         print(f"✅ 测试图像已创建: {test_image_path}")
 

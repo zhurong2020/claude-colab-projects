@@ -38,16 +38,24 @@
 
 ```
 claude-colab-projects/
-├── demos/medical-ocr-demo.ipynb    # 主要演示notebook
+├── demos/                          # 演示项目目录
+│   ├── medical-ocr-demo.ipynb       # 主要演示notebook
+│   └── gradio_demo.py               # Web界面演示
+├── tests/                          # 测试目录
+│   ├── unit/test_local_ocr.py       # 本地功能测试
+│   └── data/test_medical_doc.png    # 测试数据
+├── tools/                          # 项目管理工具
+├── shared/                         # 共享资源
+├── templates/                      # 项目模板
+├── standalone/                     # 独立项目
 ├── venv/                           # Python虚拟环境
 ├── start_local.sh                  # 一键启动脚本
-├── test_local_ocr.py              # 本地功能测试
-├── gradio_demo.py                 # Web界面演示
-├── README.md                      # 项目主文档
-├── README_LOCAL.md                # 本地运行指南
-├── CLAUDE.md                      # 开发约定
-├── requirements-dev.txt           # 开发依赖
-└── SESSION_HANDOVER.md            # 本文件
+├── README.md                       # 项目主文档
+├── README_LOCAL.md                 # 本地运行指南
+├── CLAUDE.md                       # 开发约定
+├── claude-colab-integration-guide.md # 集成指南
+├── requirements-dev.txt            # 开发依赖
+└── SESSION_HANDOVER.md             # 本文件
 ```
 
 ## 🔧 开发环境状态
