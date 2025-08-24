@@ -1,0 +1,16 @@
+﻿file_name,line_number,extracted_text,confidence
+temp_uploaded_image.png,1,医疗诊断报告,0.9998
+temp_uploaded_image.png,2,医院名称：XX市人民医院,0.9972
+temp_uploaded_image.png,3,患者姓名：张三,0.9964
+temp_uploaded_image.png,4,性别：男,0.9946
+temp_uploaded_image.png,5,年龄：45岁,0.9974
+temp_uploaded_image.png,6,科室：心血管内科,0.9934
+temp_uploaded_image.png,7,主治医师：李医生,0.9987
+temp_uploaded_image.png,8,诊断：高血压、糖尿病,0.9987
+temp_uploaded_image.png,9,处方：,0.9853
+temp_uploaded_image.png,10,1．降压药10mg每日一次,0.9681
+temp_uploaded_image.png,11,2.降糖药5mg每日两次,0.9607
+temp_uploaded_image.png,12,医生签名：李医生,0.9985
+temp_uploaded_image.png,13,日期：2025-08-24,0.9978
+temp_uploaded_image.png,14,Signature,0.9997
+temp_uploaded_image.png,15,2025-08-24,0.9938

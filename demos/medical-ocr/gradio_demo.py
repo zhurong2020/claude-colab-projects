@@ -2,7 +2,7 @@
 """
 医疗OCR Gradio演示
 PaddleOCR医疗文档识别Web界面
-版本: v1.3.11
+版本: v1.3.12
 """
 
 import warnings
@@ -346,7 +346,7 @@ class MedicalOCRProcessor:
         return df
 
 
-def process_uploaded_image(image):
+def process_uploaded_image(image, processor=None):
     """处理上传的图像 - Gradio接口函数"""
     if image is None:
         return "请上传图像文件", None
@@ -460,24 +460,55 @@ def process_uploaded_image(image):
             return f"❌ 图像处理失败: {str(img_error)}", None
         
         # 检查OCR处理器是否可用
-        global ocr_processor
-        if ocr_processor is None:
+        if processor is not None:
+            # 优先使用传入的处理器
+            active_processor = processor
+        else:
+            # 尝试获取全局变量
+            try:
+                if 'ocr_processor' not in globals():
+                    return "❌ OCR处理器未初始化，请重新运行初始化代码", None
+                
+                global ocr_processor
+                if ocr_processor is None:
+                    return "❌ OCR处理器未初始化，请重新运行初始化代码", None
+                active_processor = ocr_processor
+            except NameError:
+                return "❌ OCR处理器未初始化，请重新运行初始化代码", None
+        
+        # 最终检查
+        if active_processor is None:
             return "❌ OCR处理器未初始化，请重新运行初始化代码", None
         
         # 使用OCR处理图像
-        print("🔍 开始OCR识别...")
+        debug_info = ["🔍 开始OCR识别..."]
         try:
-            results = ocr_processor.process_single_image(temp_path)
+            # 捕获OCR处理过程中的调试信息
+            import io
+            from contextlib import redirect_stdout
+            
+            # 创建字符串缓冲区捕获print输出
+            debug_buffer = io.StringIO()
+            
+            with redirect_stdout(debug_buffer):
+                results = active_processor.process_single_image(temp_path)
+            
+            # 获取调试信息
+            debug_output = debug_buffer.getvalue()
+            if debug_output:
+                debug_info.append("\n📊 OCR处理过程调试信息:")
+                debug_info.append(debug_output)
             
             if not results:
-                # 详细的失败分析
-                analysis_result = "⚠️ 未识别到文字内容\n\n"
+                # 详细的失败分析，包含调试信息
+                analysis_result = "😞 未检测到任何文字内容\n\n"
+                analysis_result += "\n".join(debug_info) + "\n\n"
                 analysis_result += "🔍 可能的原因分析:\n"
                 analysis_result += "1. 图像中没有清晰的文字\n"
                 analysis_result += "2. 文字过小、模糊或倾斜角度过大\n"
                 analysis_result += "3. 图像背景复杂，干扰了文字识别\n"
                 analysis_result += "4. 图像对比度不足\n"
-                analysis_result += "5. 字体过于特殊或手写体难以识别\n\n"
+                analysis_result += "5. PaddleOCR版本兼容性问题\n\n"
                 analysis_result += "💡 改进建议:\n"
                 analysis_result += "• 确保图像清晰，文字大小适中\n"
                 analysis_result += "• 调整图像亮度和对比度\n"
@@ -515,7 +546,7 @@ def process_uploaded_image(image):
             # 保存CSV文件
             os.makedirs('assets/results', exist_ok=True)
             csv_path = "assets/results/ocr_results_uploaded.csv"
-            ocr_processor.save_results_to_csv(results, csv_path)
+            active_processor.save_results_to_csv(results, csv_path)
             
             # 添加统计信息
             avg_confidence = sum(r['confidence'] for r in results) / len(results)
@@ -643,7 +674,7 @@ def main():
     global ocr_processor
     
     print("🌐 启动医疗OCR Gradio演示...")
-    print("📋 版本: v1.3.11 - 增强Gradio OCR调试信息和错误处理")
+    print("📋 版本: v1.3.12 - 修复Gradio界面调试信息显示和清理不准确描述")
     
     try:
         # 初始化OCR处理器
