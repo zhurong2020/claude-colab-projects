@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-医疗OCR Gradio演示 - 修复版本
-修复了PaddleOCR兼容性和图像处理问题
-版本: v1.3.7
+医疗OCR Gradio演示
+PaddleOCR医疗文档识别Web界面
+版本: v1.3.10+
 """
 
 import warnings
@@ -23,7 +23,7 @@ if project_root not in sys.path:
 
 
 class MedicalOCRProcessor:
-    """医疗OCR处理器 - 修复版本"""
+    """医疗OCR处理器"""
     
     def __init__(self):
         """初始化医疗OCR处理器"""
@@ -41,32 +41,17 @@ class MedicalOCRProcessor:
             use_gpu = False
             print("ℹ️ PyTorch未安装，使用CPU模式")
         
-        # 初始化PaddleOCR，使用更稳定的配置
+        # 初始化PaddleOCR，使用兼容的配置
         try:
             from paddleocr import PaddleOCR
             
-            # 尝试最新版本的初始化方式
-            self.ocr = PaddleOCR(
-                use_angle_cls=True, 
-                lang='ch',
-                use_gpu=use_gpu,
-                show_log=False,  # 减少日志输出
-                enable_mkldnn=False,  # 在某些环境中可能导致问题
-                cpu_threads=4  # 限制CPU线程数避免资源争用
-            )
-            print("✅ 使用标准参数初始化OCR引擎")
+            # 使用兼容的参数初始化PaddleOCR (v3.1.1)
+            self.ocr = PaddleOCR(use_angle_cls=True, lang='ch')
+            print("✅ 使用兼容参数初始化OCR引擎")
         except Exception as e:
-            print(f"⚠️ 标准初始化失败: {e}")
-            print("🔄 尝试兼容性初始化...")
-            try:
-                # 使用最基础的参数进行初始化
-                from paddleocr import PaddleOCR
-                self.ocr = PaddleOCR(use_angle_cls=True, lang='ch')
-                print("✅ 使用兼容性参数初始化OCR引擎")
-            except Exception as e2:
-                print(f"❌ OCR初始化完全失败: {e2}")
-                self.ocr = None
-                raise RuntimeError(f"PaddleOCR初始化失败: {e2}")
+            print(f"❌ OCR初始化失败: {e}")
+            self.ocr = None
+            raise RuntimeError(f"PaddleOCR初始化失败: {e}")
         
         print("✅ OCR引擎初始化完成")
     
@@ -106,68 +91,45 @@ class MedicalOCRProcessor:
             return image_path
     
     def _parse_ocr_result(self, result):
-        """解析OCR结果 - 兼容多种返回格式"""
+        """解析OCR结果 - 兼容PaddleOCR v3.1.1+ OCRResult对象格式"""
         extracted_texts = []
         
         try:
-            if result and isinstance(result, list):
-                # 处理列表格式结果
-                for page_result in result:
-                    # 处理新版本OCRResult对象
-                    if hasattr(page_result, 'rec_texts') and hasattr(page_result, 'rec_scores'):
-                        print("✅ 检测到OCRResult对象格式")
-                        texts = page_result.rec_texts
-                        scores = page_result.rec_scores
-                        
-                        print(f"📊 识别到文本数量: {len(texts) if texts else 0}")
-                        
-                        if texts and scores:
-                            for text, score in zip(texts, scores):
-                                if text and text.strip():
-                                    extracted_texts.append({
-                                        'text': text.strip(),
-                                        'confidence': float(score)
-                                    })
-                                    print(f"📝 提取文本: {text.strip()[:50]}... (置信度: {score:.3f})")
+            if result and isinstance(result, list) and len(result) > 0:
+                page_result = result[0]  # 获取第一页结果
+                
+                # 处理PaddleOCR v3.1.1+ OCRResult对象 
+                if hasattr(page_result, 'json') and hasattr(page_result, 'json'):
+                    print("✅ 检测到PaddleOCR v3.1.1+ OCRResult对象格式")
+                    json_result = page_result.json
                     
-                    # 处理传统列表格式 (旧版PaddleOCR格式)
-                    elif isinstance(page_result, list):
-                        print("✅ 检测到传统列表格式")
-                        for line_result in page_result:
-                            if (line_result and len(line_result) >= 2 and
-                                line_result[1] and len(line_result[1]) >= 2):
-                                
-                                text = line_result[1][0]
-                                confidence = line_result[1][1]
-                                
-                                if text and text.strip():
-                                    extracted_texts.append({
-                                        'text': text.strip(),
-                                        'confidence': float(confidence)
-                                    })
-                                    print(f"📝 提取文本: {text.strip()[:50]}... (置信度: {confidence:.3f})")
-                    
-                    # 处理字典格式
-                    elif isinstance(page_result, dict) and 'rec_texts' in page_result and 'rec_scores' in page_result:
-                        print("✅ 检测到字典格式")
-                        texts = page_result['rec_texts']
-                        scores = page_result['rec_scores']
+                    if isinstance(json_result, dict) and 'res' in json_result:
+                        res_data = json_result['res']
                         
-                        if texts and scores:
-                            for text, score in zip(texts, scores):
-                                if text and text.strip():
-                                    extracted_texts.append({
-                                        'text': text.strip(),
-                                        'confidence': float(score)
-                                    })
-                                    print(f"📝 提取文本: {text.strip()[:50]}... (置信度: {score:.3f})")
-            
-            # 处理直接字典格式
-            elif result and isinstance(result, dict):
-                if 'rec_texts' in result and 'rec_scores' in result:
-                    print("✅ 检测到直接字典格式")
-                    texts = result['rec_texts']
-                    scores = result['rec_scores']
+                        if 'rec_texts' in res_data and 'rec_scores' in res_data:
+                            texts = res_data['rec_texts']
+                            scores = res_data['rec_scores']
+                            
+                            print(f"📊 识别到文本数量: {len(texts) if texts else 0}")
+                            
+                            if texts and scores:
+                                for text, score in zip(texts, scores):
+                                    if text and text.strip():
+                                        extracted_texts.append({
+                                            'text': text.strip(),
+                                            'confidence': float(score)
+                                        })
+                                        print(f"📝 提取文本: {text.strip()[:50]}... (置信度: {score:.3f})")
+                            
+                            return extracted_texts  # 成功处理后直接返回
+                
+                # 处理直接属性访问的OCRResult对象
+                if 'rec_texts' in page_result and 'rec_scores' in page_result:
+                    print("✅ 检测到直接属性OCRResult对象格式")
+                    texts = page_result['rec_texts']
+                    scores = page_result['rec_scores']
+                    
+                    print(f"📊 识别到文本数量: {len(texts) if texts else 0}")
                     
                     if texts and scores:
                         for text, score in zip(texts, scores):
@@ -177,7 +139,32 @@ class MedicalOCRProcessor:
                                     'confidence': float(score)
                                 })
                                 print(f"📝 提取文本: {text.strip()[:50]}... (置信度: {score:.3f})")
-                                
+                
+                # 处理传统列表格式 (旧版PaddleOCR格式)
+                elif isinstance(page_result, list):
+                    print("✅ 检测到传统列表格式")
+                    for line_result in page_result:
+                        if (line_result and len(line_result) >= 2 and
+                            line_result[1] and len(line_result[1]) >= 2):
+                            
+                            text = line_result[1][0]
+                            confidence = line_result[1][1]
+                            
+                            if text and text.strip():
+                                extracted_texts.append({
+                                    'text': text.strip(),
+                                    'confidence': float(confidence)
+                                })
+                                print(f"📝 提取文本: {text.strip()[:50]}... (置信度: {confidence:.3f})")
+                
+                else:
+                    print(f"⚠️ 未识别的结果格式: {type(page_result)}")
+                    # 尝试调试输出
+                    if hasattr(page_result, '__dict__'):
+                        print(f"对象属性: {list(vars(page_result).keys())}")
+                    elif hasattr(page_result, 'keys'):
+                        print(f"对象键: {list(page_result.keys())}")
+                    
         except Exception as e:
             print(f"⚠️ 结果解析失败: {e}")
             import traceback
@@ -636,7 +623,7 @@ def main():
     global ocr_processor
     
     print("🌐 启动医疗OCR Gradio演示...")
-    print("📋 版本: v1.3.7 - 修复版本")
+    print("📋 版本: v1.3.10+ - 修复IDE Pylance unbound变量警告")
     
     try:
         # 初始化OCR处理器
