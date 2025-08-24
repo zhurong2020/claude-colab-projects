@@ -1,13 +1,16 @@
 ﻿file_name,line_number,extracted_text,confidence
-sample_medical_document.png,1,LOGO,0.9979
-sample_medical_document.png,2,□□□□□XX□□□□□,0.9104
-sample_medical_document.png,3,□□□□□□□,0.9016
-sample_medical_document.png,4,□□□□,0.4212
-sample_medical_document.png,5,□0045□,0.784
-sample_medical_document.png,6,□□□□□□□□□□,0.8973
-sample_medical_document.png,7,□0□,0.4169
-sample_medical_document.png,8,1. 0□□ 10mg 0000,0.7916
-sample_medical_document.png,9,2. 0□ 5mg 0000,0.8519
-sample_medical_document.png,10,□□□□□□□□,0.9324
-sample_medical_document.png,11,□002025-08-17,0.9507
-sample_medical_document.png,12,Signature,0.9996
+sample_medical_document.png,1,医疗诊断报告,0.9998
+sample_medical_document.png,2,医院名称：XX市人民医院,0.9972
+sample_medical_document.png,3,患者姓名：张三,0.9964
+sample_medical_document.png,4,性别：男,0.9946
+sample_medical_document.png,5,年龄：45岁,0.9974
+sample_medical_document.png,6,科室：心血管内科,0.9934
+sample_medical_document.png,7,主治医师：李医生,0.9987
+sample_medical_document.png,8,诊断：高血压、糖尿病,0.9987
+sample_medical_document.png,9,处方：,0.9853
+sample_medical_document.png,10,1．降压药10mg每日一次,0.9681
+sample_medical_document.png,11,2.降糖药5mg每日两次,0.9607
+sample_medical_document.png,12,医生签名：李医生,0.9985
+sample_medical_document.png,13,日期：2025-08-24,0.9978
+sample_medical_document.png,14,Signature,0.9997
+sample_medical_document.png,15,2025-08-24,0.9938
