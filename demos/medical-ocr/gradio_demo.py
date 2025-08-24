@@ -2,7 +2,7 @@
 """
 医疗OCR Gradio演示
 PaddleOCR医疗文档识别Web界面
-版本: v1.3.10+
+版本: v1.3.11
 """
 
 import warnings
@@ -91,59 +91,109 @@ class MedicalOCRProcessor:
             return image_path
     
     def _parse_ocr_result(self, result):
-        """解析OCR结果 - 兼容多种PaddleOCR返回格式"""
+        """解析OCR结果 - 兼容多种PaddleOCR返回格式 - v1.3.11增强调试版"""
+        print(f"🔍 [DEBUG] _parse_ocr_result 开始解析，输入类型: {type(result)}")
+        
         extracted_texts = []
         try:
-            if not result or not isinstance(result, list) or not result[0]:
-                print("⚠️ OCR结果为空或格式不正确")
+            # 详细的输入验证和调试
+            if not result:
+                print("❌ [DEBUG] result为None或空")
                 return []
-
+            
+            if not isinstance(result, list):
+                print(f"❌ [DEBUG] result不是列表类型，实际类型: {type(result)}")
+                return []
+            
+            if len(result) == 0:
+                print("❌ [DEBUG] result列表为空")
+                return []
+            
             page_result = result[0]
+            print(f"🔍 [DEBUG] 第一页结果类型: {type(page_result)}")
+            print(f"🔍 [DEBUG] 第一页结果长度: {len(page_result) if hasattr(page_result, '__len__') else 'N/A'}")
 
             # 新版 PaddleOCR v3.1.1+ (返回带 .json 属性的 OCRResult 对象)
             if hasattr(page_result, 'json'):
-                print("✅ 检测到PaddleOCR v3.1.1+ OCRResult对象格式")
+                print("✅ [DEBUG] 检测到PaddleOCR v3.1.1+ OCRResult对象格式")
                 json_result = page_result.json
-                if isinstance(json_result, dict) and 'res' in json_result:
-                    res_data = json_result['res']
-                    if res_data and 'rec_texts' in res_data and 'rec_scores' in res_data:
-                        texts, scores = res_data['rec_texts'], res_data['rec_scores']
-                        print(f"📊 识别到文本数量: {len(texts) if texts else 0}")
-                        if texts and scores:
-                            for text, score in zip(texts, scores):
-                                if text and text.strip():
-                                    extracted_texts.append({'text': text.strip(), 'confidence': float(score)})
-                return extracted_texts
-
+                print(f"🔍 [DEBUG] json_result类型: {type(json_result)}")
+                
+                if isinstance(json_result, dict):
+                    print(f"🔍 [DEBUG] json_result键: {list(json_result.keys())}")
+                    
+                    if 'res' in json_result:
+                        res_data = json_result['res']
+                        print(f"🔍 [DEBUG] res_data类型: {type(res_data)}")
+                        print(f"🔍 [DEBUG] res_data键: {list(res_data.keys()) if isinstance(res_data, dict) else 'not dict'}")
+                        
+                        if res_data and 'rec_texts' in res_data and 'rec_scores' in res_data:
+                            texts, scores = res_data['rec_texts'], res_data['rec_scores']
+                            print(f"📊 [DEBUG] 识别到文本数量: {len(texts) if texts else 0}")
+                            print(f"📊 [DEBUG] 置信度数量: {len(scores) if scores else 0}")
+                            
+                            if texts and scores:
+                                print(f"🔍 [DEBUG] 前3个文本: {texts[:3] if len(texts) >= 3 else texts}")
+                                for i, (text, score) in enumerate(zip(texts, scores)):
+                                    if text and text.strip():
+                                        extracted_texts.append({'text': text.strip(), 'confidence': float(score)})
+                                        if i < 3:  # 只打印前3个
+                                            print(f"✅ [DEBUG] 提取文本 {i+1}: {text.strip()[:30]}... (置信度: {score:.3f})")
+                                        
+                                print(f"✅ [DEBUG] OCRResult对象格式处理完成，提取了{len(extracted_texts)}个文本")
+                                return extracted_texts
+                        else:
+                            print("❌ [DEBUG] res_data中缺少rec_texts或rec_scores")
+                    else:
+                        print("❌ [DEBUG] json_result中缺少res键")
+                else:
+                    print(f"❌ [DEBUG] json_result不是字典类型: {type(json_result)}")
+                        
             # 兼容直接返回字典列表的格式
             elif isinstance(page_result, list) and page_result and isinstance(page_result[0], dict) and 'text' in page_result[0]:
-                print("✅ 检测到字典列表格式")
-                for line in page_result:
+                print("✅ [DEBUG] 检测到字典列表格式")
+                for i, line in enumerate(page_result):
                     text, confidence = line.get('text', ''), line.get('confidence', 0.0)
                     if text.strip():
                         extracted_texts.append({'text': text.strip(), 'confidence': float(confidence)})
+                        if i < 3:
+                            print(f"✅ [DEBUG] 字典格式文本 {i+1}: {text.strip()[:30]}... (置信度: {confidence:.3f})")
+                            
+                print(f"✅ [DEBUG] 字典列表格式处理完成，提取了{len(extracted_texts)}个文本")
                 return extracted_texts
 
             # 兼容旧版 PaddleOCR (返回包含元组的列表)
             elif isinstance(page_result, list):
-                print("✅ 检测到传统列表格式")
-                for line_result in page_result:
+                print("✅ [DEBUG] 检测到传统列表格式")
+                print(f"🔍 [DEBUG] 列表长度: {len(page_result)}")
+                
+                for i, line_result in enumerate(page_result):
+                    print(f"🔍 [DEBUG] 第{i+1}行结果类型: {type(line_result)}, 长度: {len(line_result) if hasattr(line_result, '__len__') else 'N/A'}")
+                    
                     if (line_result and len(line_result) >= 2 and
                         line_result[1] and len(line_result[1]) >= 2):
                         text, confidence = line_result[1]
                         if text and text.strip():
                             extracted_texts.append({'text': text.strip(), 'confidence': float(confidence)})
+                            if i < 3:
+                                print(f"✅ [DEBUG] 传统格式文本 {i+1}: {text.strip()[:30]}... (置信度: {confidence:.3f})")
+                    else:
+                        print(f"⚠️ [DEBUG] 第{i+1}行格式不符合预期")
+                        
+                print(f"✅ [DEBUG] 传统列表格式处理完成，提取了{len(extracted_texts)}个文本")
                 return extracted_texts
             
             else:
-                print(f"⚠️ 未知的OCR结果格式: {type(page_result)}")
+                print(f"❌ [DEBUG] 未知的OCR结果格式: {type(page_result)}")
+                print(f"🔍 [DEBUG] page_result详情: {str(page_result)[:200]}...")
                 self._debug_result_structure(result)
 
         except Exception as e:
-            print(f"⚠️ 结果解析失败: {e}")
+            print(f"❌ [DEBUG] 结果解析异常: {e}")
             import traceback
-            print(f"详细错误: {traceback.format_exc()}")
+            print(f"🔍 [DEBUG] 详细错误: {traceback.format_exc()}")
         
+        print(f"⚠️ [DEBUG] _parse_ocr_result 结束，最终提取了{len(extracted_texts)}个文本")
         return extracted_texts
     
     def extract_text_from_image(self, image_path):
@@ -593,7 +643,7 @@ def main():
     global ocr_processor
     
     print("🌐 启动医疗OCR Gradio演示...")
-    print("📋 版本: v1.3.10+ - 修复IDE Pylance unbound变量警告")
+    print("📋 版本: v1.3.11 - 增强Gradio OCR调试信息和错误处理")
     
     try:
         # 初始化OCR处理器
