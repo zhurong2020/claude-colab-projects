@@ -19,8 +19,10 @@
 # 在本地环境
 jupyter notebook medical-ocr-demo.ipynb
 
-# 在Google Colab
-# 直接上传并打开 medical-ocr-demo.ipynb
+# 在Google Colab中运行
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhurong2020/claude-colab-projects/blob/main/demos/medical-ocr/medical-ocr-demo.ipynb)
+
+点击上面的按钮直接在Google Colab中打开notebook。
 ```
 
 ### 方式2: Web界面

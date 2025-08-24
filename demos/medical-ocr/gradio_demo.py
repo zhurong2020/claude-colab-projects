@@ -168,15 +168,15 @@ class MedicalOCRProcessor:
             # 预处理图像：确保图像格式和质量适合OCR
             processed_image_path = self._preprocess_image(image_path)
             
-            # 使用不同的API调用方式进行兼容性处理
+            # 使用PaddleOCR进行识别
             result = None
             extracted_texts = []
             
-            # 方法1: 尝试使用传统的ocr方法 (最稳定)
+            # 使用predict方法 (推荐的新版本API)
             try:
-                print("🔄 尝试使用传统ocr方法...")
-                result = self.ocr.ocr(processed_image_path, cls=True)
-                print(f"✅ OCR方法调用成功，结果类型: {type(result)}")
+                print("🔄 尝试使用predict方法...")
+                result = self.ocr.predict(processed_image_path)
+                print(f"✅ predict方法调用成功，结果类型: {type(result)}")
                 extracted_texts = self._parse_ocr_result(result)
                 
                 if extracted_texts:
@@ -184,13 +184,13 @@ class MedicalOCRProcessor:
                     return extracted_texts
                 
             except Exception as e1:
-                print(f"⚠️ 传统OCR方法失败: {e1}")
+                print(f"⚠️ predict方法失败: {e1}")
                 
-                # 方法2: 尝试使用predict方法
+                # 尝试使用传统的ocr方法
                 try:
-                    print("🔄 尝试使用predict方法...")
-                    result = self.ocr.predict(processed_image_path)
-                    print(f"✅ predict方法调用成功，结果类型: {type(result)}")
+                    print("🔄 尝试使用传统ocr方法...")
+                    result = self.ocr.ocr(processed_image_path)  # type: ignore
+                    print(f"✅ OCR方法调用成功，结果类型: {type(result)}")
                     extracted_texts = self._parse_ocr_result(result)
                     
                     if extracted_texts:
@@ -198,12 +198,8 @@ class MedicalOCRProcessor:
                         return extracted_texts
                         
                 except Exception as e2:
-                    print(f"⚠️ predict方法也失败: {e2}")
-                    
-                    # 方法3: 最后的尝试 - 只记录错误，不再尝试直接调用
                     print(f"❌ 所有可用的OCR调用方法都失败")
-                    print(f"详细错误: ocr={e1}, predict={e2}")
-                    # 注意：PaddleOCR对象不支持直接调用，移除该尝试
+                    print(f"详细错误: predict={e1}, ocr={e2}")
             
             # 如果所有方法都没有识别到文字
             if not extracted_texts:
