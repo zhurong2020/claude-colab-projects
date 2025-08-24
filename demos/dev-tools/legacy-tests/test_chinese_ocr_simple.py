@@ -10,7 +10,7 @@ print('🔍 初始化中文OCR处理器...')
 ocr = PaddleOCR(use_angle_cls=True, lang='ch')
 
 print('📄 开始识别中文医疗文档...')
-result = ocr.ocr('chinese_medical_document.png')
+result = ocr.predict('chinese_medical_document.png')
 
 if result and len(result) > 0:
     page_result = result[0]

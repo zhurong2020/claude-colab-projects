@@ -33,9 +33,12 @@ def setup_encoding():
         print("📝 使用默认编码设置")
     
     # 强制设置stdout编码
-    if hasattr(sys.stdout, 'reconfigure'):
-        sys.stdout.reconfigure(encoding='utf-8')
-        print("✅ 标准输出编码设置为UTF-8")
+    try:
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8')  # type: ignore
+            print("✅ 标准输出编码设置为UTF-8")
+    except AttributeError:
+        pass
     
     return True
 
@@ -59,7 +62,7 @@ def safe_chinese_print(text, confidence=None):
                 output = safe_text
             print(output)
             return True
-        except Exception as e:
+        except Exception:
             # 方法3：显示字节表示
             try:
                 byte_repr = text.encode('utf-8')
@@ -179,7 +182,7 @@ def test_ocr_with_encoding_fix():
     # 进行OCR识别
     print(f"\n🔍 识别测试文档: {test_doc}")
     try:
-        result = ocr.ocr(test_doc)
+        result = ocr.predict(test_doc)
         
         if not result or len(result) == 0:
             print("❌ OCR无识别结果")

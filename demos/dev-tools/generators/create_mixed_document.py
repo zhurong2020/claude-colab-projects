@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from PIL import Image, ImageDraw, ImageFont
-import os
 
 def create_mixed_language_document():
     """创建中英文混合医疗文档"""

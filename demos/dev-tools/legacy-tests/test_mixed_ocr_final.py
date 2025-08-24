@@ -8,10 +8,8 @@ import warnings
 warnings.filterwarnings('ignore')
 
 import os
-import sys
 import pandas as pd
 from paddleocr import PaddleOCR
-from PIL import Image, ImageDraw, ImageFont
 
 def test_mixed_language_ocr():
     """测试中英文混合OCR识别能力"""
@@ -41,7 +39,7 @@ def test_mixed_language_ocr():
         
         try:
             # OCR识别
-            result = ocr.ocr(test_file)
+            result = ocr.predict(test_file)
             
             if not result or len(result) == 0:
                 print("❌ 无识别结果")
