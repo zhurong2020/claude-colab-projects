@@ -1,5 +1,7 @@
 # 医疗OCR项目本地运行指南
 
+**当前版本**: v1.3.2 (修复IDE诊断问题和代码质量问题)
+
 ## 🚀 快速开始
 
 ### 1. 一键启动脚本
@@ -8,7 +10,7 @@
 ./start_local.sh
 
 # 启动简单的Gradio Web界面演示
-source venv/bin/activate && python gradio_demo.py
+source venv/bin/activate && cd demos/medical-ocr && python gradio_demo.py
 ```
 
 ### 2. 手动步骤
@@ -28,27 +30,28 @@ pip install -r requirements-dev.txt
 #### 运行测试
 ```bash
 # 运行核心功能测试
-python test_local_ocr.py
+cd tests/unit && python test_local_ocr.py
 
 # 启动Gradio界面
-python gradio_demo.py
+cd demos/medical-ocr && python gradio_demo.py
 
 # 启动Jupyter notebook
-jupyter notebook demos/medical-ocr-demo.ipynb
+jupyter notebook demos/medical-ocr/medical-ocr-demo.ipynb
 ```
 
 ## 📁 文件说明
 
 - `start_local.sh` - 一键启动脚本
-- `test_local_ocr.py` - 本地OCR功能测试
-- `gradio_demo.py` - Gradio界面演示
+- `tests/unit/test_local_ocr.py` - 本地OCR功能测试
+- `demos/medical-ocr/gradio_demo.py` - Gradio界面演示
+- `demos/medical-ocr/medical-ocr-demo.ipynb` - 主演示notebook
 - `requirements-dev.txt` - 开发环境依赖
 
 ## ✅ 验证环境
 
 运行测试脚本检查环境是否正确配置：
 ```bash
-source venv/bin/activate && python test_local_ocr.py
+source venv/bin/activate && cd tests/unit && python test_local_ocr.py
 ```
 
 应该看到：
@@ -106,7 +109,8 @@ python gradio_demo.py --port 8080
 
 - [项目主页](https://github.com/zhurong2020/claude-colab-projects)
 - [CLAUDE.md](./CLAUDE.md) - 项目约定
-- [原始notebook](./demos/medical-ocr-demo.ipynb)
+- [医疗OCR演示](./demos/medical-ocr/medical-ocr-demo.ipynb)
+- [演示目录导航](./demos/README.md)
 
 ---
 *使用Claude Code开发维护 🚀*
