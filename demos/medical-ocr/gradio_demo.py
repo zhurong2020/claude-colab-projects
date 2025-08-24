@@ -239,20 +239,10 @@ class MedicalOCRProcessor:
                 except Exception as e2:
                     print(f"⚠️ predict方法也失败: {e2}")
                     
-                    # 方法3: 尝试直接调用（最基础方法）
-                    try:
-                        print("🔄 尝试直接调用方法...")
-                        result = self.ocr(processed_image_path)
-                        print(f"✅ 直接调用成功，结果类型: {type(result)}")
-                        extracted_texts = self._parse_ocr_result(result)
-                        
-                        if extracted_texts:
-                            print(f"✅ 成功识别 {len(extracted_texts)} 行文字")
-                            return extracted_texts
-                            
-                    except Exception as e3:
-                        print(f"❌ 所有调用方法都失败")
-                        print(f"详细错误: ocr={e1}, predict={e2}, direct={e3}")
+                    # 方法3: 最后的尝试 - 只记录错误，不再尝试直接调用
+                    print(f"❌ 所有可用的OCR调用方法都失败")
+                    print(f"详细错误: ocr={e1}, predict={e2}")
+                    # 注意：PaddleOCR对象不支持直接调用，移除该尝试
             
             # 如果所有方法都没有识别到文字
             if not extracted_texts:
