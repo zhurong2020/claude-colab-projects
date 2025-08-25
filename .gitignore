@@ -69,7 +69,18 @@ checkpoints/
 temp/
 tmp/
 
-# Medical OCR Demo generated files
+# Medical OCR Demo temporary and generated files
+demos/medical-ocr/*temp*
+demos/medical-ocr/*_processed.*
+demos/medical-ocr/temp_*
+demos/medical-ocr/*_temp.*
+demos/medical-ocr/test_*.csv
+demos/medical-ocr/final_test.csv
+demos/medical-ocr/debug_*.csv
+demos/medical-ocr/uploaded_*
+demos/medical-ocr/temp_uploaded_*
+
+# Legacy OCR files (old structure)
 demos/sample_medical_document.png
 demos/temp_uploaded_image.png
 demos/demo_image.png
@@ -82,11 +93,15 @@ demos/test_ocr_fix.py
 # Gradio temporary files
 demos/.gradio/
 demos/flagged/
+demos/medical-ocr/flagged/
 
-# Demo output files
+# Demo output files - but preserve sample docs
 demos/*.png
 demos/*.jpg
 demos/*.jpeg
 !demos/samples/*.png
 !demos/samples/*.jpg
 !demos/samples/*.jpeg
+!demos/medical-ocr/assets/sample_docs/*.png
+!demos/medical-ocr/assets/sample_docs/*.jpg
+!demos/medical-ocr/assets/sample_docs/*.jpeg
