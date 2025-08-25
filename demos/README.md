@@ -66,6 +66,7 @@ python gradio_demo.py
 
 ## 📋 版本历史
 
+- **v1.3.17**: 彻底修复Colab中文字体显示和Gradio界面识别问题
 - **v1.3.16**: 完全解决中文识别和PaddleOCR兼容性问题，统一版本管理
 - **v1.3.15**: 修复OCR识别功能和优化用户体验，所有功能完全正常
 - **v1.3.14**: 修复Cell顺序和Gradio界面缺失问题，优化IDE警告
@@ -95,4 +96,4 @@ python gradio_demo.py
 
 ---
 *📅 最后更新: 2025-08-25*
-*🤖 使用 Claude Code 构建 v1.3.16*
+*🤖 使用 Claude Code 构建 v1.3.17*
