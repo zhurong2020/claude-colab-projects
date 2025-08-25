@@ -2,7 +2,7 @@
 """
 医疗OCR Gradio演示
 PaddleOCR医疗文档识别Web界面
-版本: v1.3.12
+版本: v1.3.16
 """
 
 import warnings
@@ -91,7 +91,7 @@ class MedicalOCRProcessor:
             return image_path
     
     def _parse_ocr_result(self, result):
-        """解析OCR结果 - 兼容多种PaddleOCR返回格式 - v1.3.11增强调试版"""
+        """解析OCR结果 - 兼容多种PaddleOCR返回格式 - v1.3.16"""
         print(f"🔍 [DEBUG] _parse_ocr_result 开始解析，输入类型: {type(result)}")
         
         extracted_texts = []
@@ -674,7 +674,7 @@ def main():
     global ocr_processor
     
     print("🌐 启动医疗OCR Gradio演示...")
-    print("📋 版本: v1.3.12 - 修复Gradio界面调试信息显示和清理不准确描述")
+    print("📋 版本: v1.3.16 - 完全解决中文识别和PaddleOCR兼容性问题")
     
     try:
         # 初始化OCR处理器
