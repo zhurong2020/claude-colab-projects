@@ -222,29 +222,32 @@ class MedicalOCRProcessor:
             result = None
             extracted_texts = []
             
-            # 使用predict方法 (推荐的新版本API)
+            # 优先使用predict方法 (推荐的新版本API)
             try:
-                print("🔄 尝试使用predict方法...")
+                print("🔄 使用推荐的predict方法...")
                 result = self.ocr.predict(processed_image_path)
                 print(f"✅ predict方法调用成功，结果类型: {type(result)}")
                 extracted_texts = self._parse_ocr_result(result)
                 
                 if extracted_texts:
                     print(f"✅ 成功识别 {len(extracted_texts)} 行文字")
+                    # 显示前3行作为验证
+                    for i, item in enumerate(extracted_texts[:3]):
+                        print(f"  示例 {i+1}: {item['text'][:30]}... (置信度: {item['confidence']:.3f})")
                     return extracted_texts
                 
             except Exception as e1:
                 print(f"⚠️ predict方法失败: {e1}")
                 
-                # 尝试使用传统的ocr方法
+                # 备用：尝试使用传统的ocr方法（已废弃但可能仍然可用）
                 try:
-                    print("🔄 尝试使用传统ocr方法...")
-                    result = self.ocr.ocr(processed_image_path)  # type: ignore
-                    print(f"✅ OCR方法调用成功，结果类型: {type(result)}")
+                    print("🔄 尝试使用传统ocr方法作为备用...")
+                    result = self.ocr.ocr(processed_image_path)  # type: ignore # 废弃方法但作为备用
+                    print(f"✅ 传统OCR方法调用成功，结果类型: {type(result)}")
                     extracted_texts = self._parse_ocr_result(result)
                     
                     if extracted_texts:
-                        print(f"✅ 成功识别 {len(extracted_texts)} 行文字")
+                        print(f"✅ 通过传统方法成功识别 {len(extracted_texts)} 行文字")
                         return extracted_texts
                         
                 except Exception as e2:
