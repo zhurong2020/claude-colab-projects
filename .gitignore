@@ -36,6 +36,14 @@ ENV/
 env.bak/
 venv.bak/
 
+# Security - Keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
 # IDE
 .vscode/
 .idea/
