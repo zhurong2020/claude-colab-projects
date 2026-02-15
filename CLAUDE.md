@@ -104,7 +104,6 @@ claude-colab-projects/
 ├── start_local.sh              # 本地环境一键启动脚本
 ├── README_LOCAL.md             # 本地运行指南
 ├── claude-colab-integration-guide.md # 集成指南
-├── SESSION_HANDOVER.md         # 对话交接文档
 ├── requirements-dev.txt        # 开发依赖
 └── CLAUDE.md                   # 本文件
 ```

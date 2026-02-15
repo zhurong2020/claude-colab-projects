@@ -50,6 +50,9 @@ venv.bak/
 *.swp
 *.swo
 
+# Claude Code local config
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
