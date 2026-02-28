@@ -1,118 +1,20 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# Environment variables
-.env
-.venv
-env/
+﻿.venv/
 venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Security - Keys and certificates
-*.pem
-*.key
-*.p12
-*.pfx
-*.crt
-*.cer
-
-# IDE
-.vscode/
+env/
+__pycache__/
+*.pyc
 .idea/
-*.swp
-*.swo
+.vscode/
 
-# Claude Code local config
-.claude/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Project specific
-data/
-models/
-logs/
-outputs/
-checkpoints/
-*.pkl
-*.pth
-*.pt
-*.h5
-*.hdf5
-
-# Large files
+# Ignore large medical data files
+*.dcm
+*.nii
+*.nii.gz
+*.mhd
+*.raw
 *.zip
-*.tar.gz
-*.rar
+*.h5
 
-# Temporary files
-*.tmp
-*.temp
-temp/
-tmp/
-
-# Medical OCR Demo temporary and generated files
-demos/medical-ocr/*temp*
-demos/medical-ocr/*_processed.*
-demos/medical-ocr/temp_*
-demos/medical-ocr/*_temp.*
-demos/medical-ocr/test_*.csv
-demos/medical-ocr/final_test.csv
-demos/medical-ocr/debug_*.csv
-demos/medical-ocr/uploaded_*
-demos/medical-ocr/temp_uploaded_*
-
-# Legacy OCR files (old structure)
-demos/sample_medical_document.png
-demos/temp_uploaded_image.png
-demos/demo_image.png
-demos/chinese_medical_document.png
-demos/ocr_results*.csv
-demos/*_ocr_results.csv
-demos/test_chinese_ocr.py
-demos/test_ocr_fix.py
-
-# Gradio temporary files
-demos/.gradio/
-demos/flagged/
-demos/medical-ocr/flagged/
-
-# Demo output files - but preserve sample docs
-demos/*.png
-demos/*.jpg
-demos/*.jpeg
-!demos/samples/*.png
-!demos/samples/*.jpg
-!demos/samples/*.jpeg
-!demos/medical-ocr/assets/sample_docs/*.png
-!demos/medical-ocr/assets/sample_docs/*.jpg
-!demos/medical-ocr/assets/sample_docs/*.jpeg
+# Local config
+.env
+config_local.yaml
