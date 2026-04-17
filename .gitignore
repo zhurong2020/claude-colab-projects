@@ -18,3 +18,7 @@ __pycache__/
 # Local config
 .env
 config_local.yaml
+
+# Claude Code 本地状态（会话记录 / 本地 settings 等不应进仓库）
+.claude/
+.claude-memory
