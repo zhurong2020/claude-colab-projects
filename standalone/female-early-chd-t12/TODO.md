@@ -13,6 +13,19 @@ This list starts after the active 718-case Paper1G T12 midpoint audit finishes. 
 
 The batch that was active when this change was made is unaffected: its Cell 1 had already downloaded the runner to `/content`, and Cell 6 launches that local path without touching the network. The change takes effect on the next Cell 1 run.
 
+## 0b. Pending — make this repository private once the batch finishes
+
+Decided 2026-09-11 by 诸嵘. Policy: everything private except the personal site and pyobfus.
+
+- [ ] Confirm the 718-case batch has finished and its Drive records are preserved (§1 first item).
+- [ ] Flip `zhurong2020/claude-colab-projects` to private.
+- [ ] In Colab, authorise GitHub private-repository access before reopening this notebook. The `colab.research.google.com/github/...` links do not work on a private repo until that is granted.
+- [ ] Re-run Cell 1 once and confirm it prints `Runner from Drive ...`, not the GitHub fallback.
+
+The blocker that made this unsafe was cleared in §0: the runner now comes from Drive. Flipping earlier would have left a mid-batch reconnect unable to resume.
+
+Open question, not a blocker: this repository also holds a general Colab integration guide under an MIT licence, which has reuse value outside this research. Making the whole repository private gives that up. Splitting the research `standalone/` tasks into a private repo would keep both, at the cost of more setup. Recorded in `home/archives/project_docs/GITHUB_VISIBILITY_INVENTORY.md`.
+
 ## 1. Close and validate the active audit
 
 - [ ] Preserve `results.csv`, `case_task_events.jsonl`, session provenance and resource telemetry from Drive.
