@@ -19,4 +19,6 @@ The notebook reads its runner, manifest, historical masks and checkpoint from th
 
 Each pending CT is copied just in time from Drive to Colab local scratch before TotalSegmentator runs, then removed after the patient result is checkpointed. The 718-case historical-mask archive is extracted once to `/content`, so inference does not repeatedly read large NIfTI inputs directly through Drive FUSE.
 
+The runtime is pinned to TotalSegmentator 2.18.0, matching the locally validated environment. Startup checks require both `vertebrae_body` and `vertebrae_pp` before the smoke test begins; older releases such as 2.11.0 do not expose `vertebrae_pp`.
+
 The Drive inventory was checked before transfer. Existing cohort CT files were reused; only one genuinely missing CT and the task-specific mask archive were uploaded.
