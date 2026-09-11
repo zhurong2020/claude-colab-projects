@@ -4,8 +4,9 @@
 
 本项目是一个医疗文档OCR识别演示项目，使用PaddleOCR进行中文医疗文档的文字识别，并提供结构化的CSV输出。
 
-**当前版本**: v1.3.36 (修复PaddleOCR变量未定义和PIL导入警告)  
-**更新时间**: 2025-08-26
+**当前版本**: v1.4.0 (新增 Female Early CHD T12 Colab 独立任务)
+
+**更新时间**: 2026-09-11
 
 ## 🛠️ 开发约定
 
@@ -85,6 +86,7 @@ claude-colab-projects/
 │   │       └── test_ocr_fix.py
 │   └── README.md              # demos总导航文档
 ├── standalone/                # 大型独立项目目录
+│   └── female-early-chd-t12/  # 女性早发冠心病 T12 midpoint audit
 ├── shared/                    # 项目级共享资源
 │   ├── utils/                 # 通用工具函数
 │   └── assets/                # 共享资源文件

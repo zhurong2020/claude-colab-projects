@@ -2,7 +2,7 @@
 
 > 🏥 使用PaddleOCR进行中文医疗文档文字识别，支持本地开发和Colab运行
 
-**当前版本**: v1.3.36 (修复PaddleOCR变量未定义和PIL导入警告) | **更新时间**: 2025-08-26
+**当前版本**: v1.4.0 (新增 Female Early CHD T12 Colab 独立任务) | **更新时间**: 2026-09-11
 
 ## 🎯 项目概述
 
@@ -26,6 +26,7 @@ claude-colab-projects/
 │   ├── shared/                # 共享资源和工具
 │   └── dev-tools/             # 开发辅助工具
 ├── standalone/                # 大型独立项目目录
+│   └── female-early-chd-t12/  # 女性早发冠心病 T12 midpoint audit
 ├── shared/                    # 项目级共享资源
 ├── tests/                     # 测试目录
 ├── tools/                     # 项目管理工具
@@ -51,6 +52,10 @@ claude-colab-projects/
 
 ### Google Colab运行
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhurong2020/claude-colab-projects/blob/main/demos/medical-ocr/medical-ocr-demo.ipynb)
+
+### Female Early CHD T12 audit
+
+[![Open T12 Audit In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhurong2020/claude-colab-projects/blob/main/standalone/female-early-chd-t12/20260911_t12_midpoint_audit_colab.ipynb)
 
 ### 手动安装
 ```bash
