@@ -15,7 +15,15 @@ Manual selection:
 5. In Colab's Secrets panel, add `TOTALSEG_LICENSE`, paste the academic license number and enable notebook access.
 6. Use a T4 GPU with High-RAM and run all cells in Chrome.
 
-The notebook reads its runner, manifest, historical masks and checkpoint from the authenticated user's `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/` tree. No patient-level manifest, mask, checkpoint or CT volume is stored in this public repository.
+The notebook reads its runner, manifest, historical masks and checkpoint from the authenticated user's `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/` tree. No patient-level manifest, mask, checkpoint or CT volume is stored in this repository.
+
+### Runner source and repository visibility
+
+From notebook v1.1.2, Cell 1 copies the runner from `assets/run_t12_audit.py` on Drive and prints the source and its sha256. It falls back to the GitHub raw URL only when that asset is absent.
+
+This matters because v1.1.1 fetched the runner from an unauthenticated `raw.githubusercontent.com` URL. That call returns 404 the moment this repository stops being public, so a runtime reconnect part way through a long batch would have been unable to resume. **The notebook no longer depends on this repository being public.**
+
+Keep the two copies in step. When `run_t12_audit.py` changes here, upload it to Drive as well, or Cell 1 will silently keep using the older asset. The printed sha256 is how you tell which one ran.
 
 Each pending CT is copied just in time from Drive to Colab local scratch before TotalSegmentator runs, then removed after the patient result is checkpointed. The 718-case historical-mask archive is extracted once to `/content`, so inference does not repeatedly read large NIfTI inputs directly through Drive FUSE.
 

@@ -4,6 +4,15 @@ Updated: 2026-09-11
 
 This list starts after the active 718-case Paper1G T12 midpoint audit finishes. Do not interrupt the active batch to perform these items.
 
+## 0. Done 2026-09-11 — runner no longer needs a public repository
+
+- [x] Upload `run_t12_audit.py` to `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/assets/` (md5 `263a5317eb506084ec5f604c80db2380`, verified against the repository copy).
+- [x] Notebook v1.1.2 reads the runner from that Drive asset and prints source plus sha256; the GitHub raw URL is now only a fallback.
+- [x] Correct the README, which still described the runner as coming from Drive after v1.1.1 had moved it to GitHub.
+- [ ] When `run_t12_audit.py` changes, re-upload it to Drive. Cell 1 prefers the Drive asset and will otherwise keep running the older copy.
+
+The batch that was active when this change was made is unaffected: its Cell 1 had already downloaded the runner to `/content`, and Cell 6 launches that local path without touching the network. The change takes effect on the next Cell 1 run.
+
 ## 1. Close and validate the active audit
 
 - [ ] Preserve `results.csv`, `case_task_events.jsonl`, session provenance and resource telemetry from Drive.
