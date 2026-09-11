@@ -38,7 +38,7 @@ Open question, not a blocker: this repository also holds a general Colab integra
 
 - [ ] Reconcile the 718 Paper1G IDs against the existing Drive/local `stage2_v2_abdominal_muscles_thin` inventory (reported 718/718, 727 MB) and its provenance sidecars.
 - [ ] Reconcile against the existing `total` multilabel masks. The validated mapping records `autochthon_left/right` as labels 86/87; verify that these correspond to the intended Paper1A/Paper5 paraspinal definition before calling them erector spinae.
-- [ ] Explain the legacy explicit-mask gap in a PHI-free audit table: 43/718 lack `erector_spinae_left/right` in the old per-case label tree; 42 are `female_new`, one is `original_735`; all 43 have skeletal-muscle masks but no old VFA or standard total-muscle density value.
+- [ ] Generate a PHI-free machine-readable reconciliation table for the 43 historical explicit-mask gaps, including cohort branch, availability in each alternative mask inventory and final disposition.
 - [ ] Do not launch a 43-case `abdominal_muscles` rerun unless the two existing mask inventories fail checksum/readability/task-map QC.
 
 ## 3. Recompute muscle measurements at the corrected T12 slice
@@ -70,3 +70,9 @@ Open question, not a blocker: this repository also holds a general Colab integra
 - [ ] Paper1G: complete corrected T12 VFA audit/refit gate; muscle is not a required current-model covariate.
 - [ ] Paper1A/Paper5/radiomics: require corrected-slice muscle reconciliation before using a new unified body-composition dataset.
 - [ ] Preserve the 720-source/718-analysis distinction and the malignancy-lock exclusions in every derived manifest.
+
+## 7. Documentation closeout
+
+- [ ] Update `ASSET_AND_RUN_STATUS_20260911.md` with final outcome counts, elapsed time, CU estimate, resource peaks and Drive artifact checksums.
+- [ ] Record the selected muscle-mask definition and rejected alternatives after semantic review.
+- [ ] Mark completed checklist items with dated evidence links; do not delete historical decisions.

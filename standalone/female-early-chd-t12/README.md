@@ -31,7 +31,7 @@ The batch writes an atomic per-case checkpoint to Drive. `SUCCESS` and determini
 
 Persistent run records are written under `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/`: `output/results.csv`, `logs/resource_telemetry.csv`, `logs/case_task_events.jsonl`, `logs/session_provenance.json`, and the final `logs/RESOURCE_SUMMARY.md`. TotalSegmentator progress bars are suppressed from the notebook display; concise per-task durations and per-case status remain visible.
 
-Post-run asset reconciliation, corrected-slice muscle work, selective mask retention and CU-efficient scheduling are tracked in [`TODO.md`](TODO.md).
+Verified cohort, muscle-asset, mask-retention and earlyoom findings are recorded in [`ASSET_AND_RUN_STATUS_20260911.md`](ASSET_AND_RUN_STATUS_20260911.md). Post-run asset reconciliation, corrected-slice muscle work, selective mask retention and CU-efficient scheduling are tracked separately in [`TODO.md`](TODO.md).
 
 The runtime is pinned to TotalSegmentator 2.18.0, matching the locally validated environment. Startup checks require both `vertebrae_body` and `vertebrae_pp` before the smoke test begins; older releases such as 2.11.0 do not expose `vertebrae_pp`.
 
