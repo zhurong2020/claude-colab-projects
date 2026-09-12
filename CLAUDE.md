@@ -31,6 +31,7 @@
 - **版本标记**: commit message必须包含明确的版本号，便于版本追踪
 
 ### 代码质量要求
+- 新建或实质修订 Colab notebook 时遵循 `cardiac-ml-research/docs/technical/COLAB_NOTEBOOK_STANDARD.md`。默认仅 Cell 0 使用标题/版本 Markdown；每个操作性代码单元首个非空行写 `# Cell N: 简短用途`，不再额外创建只重复该标题的 Markdown 单元。只有前置条件、风险警告、人工步骤或结果解释等较长内容才单独使用 Markdown。
 - 运行lint和typecheck命令确保代码质量
 - 修复所有IDE PROBLEMS警告
 - 使用类型注解提高代码可读性
