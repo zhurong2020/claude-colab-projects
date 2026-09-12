@@ -75,6 +75,14 @@ standard.
 Because v1.1.0 deletes case work directories, create the review archive by a
 selective rerun after the scalar checkpoint is complete:
 
+**Why 255 cases are run again:** every one of the 255 is a subset of the already
+completed 718-case cohort. The first pass computed and checkpointed scalar audit
+fields but deliberately removed the new per-case TotalSegmentator work directories
+to control Drive storage. The selective pass repeats inference only for cases with
+high review value so it can retain T12-relevant masks, task logs, checksums and
+5-second resource telemetry. It is not filling 255 unprocessed cases and must not
+be added to 718 as a new denominator.
+
 - [x] Freeze all `QC_ERROR` cases, all `pp_t12_agreement=0` cases, all positive
       pairs with absolute relative VFA change >=20%, and 40 controls (255 unique;
       one overlap). Explicit local earlyoom cases were not supplied and remain a
@@ -121,6 +129,42 @@ selective rerun after the scalar checkpoint is complete:
 - [ ] Use T4 High-RAM for `abdominal_muscles` inference until peak telemetry proves a cheaper tier safe; use A100 only if a timed pilot shows lower total CU per successful case.
 - [ ] Compare configurations using `CU per successful case`, wall time, peak PSS and failure rate, rather than GPU/RAM utilization alone.
 - [ ] Reuse the existing TotalSegmentator weight cache and use just-in-time local scratch copies; retain atomic per-case checkpoints on Drive.
+
+### 5a. Conditional serial closeout queue after the 255-case run
+
+Do not build or launch another broad segmentation notebook until the active selective
+run is complete, backed up and reconciled. The next notebook, if still needed, must
+be generated from the verified missing-work set rather than from historical TODO
+counts.
+
+1. **Close the active run:** freeze selective results, events, session provenance,
+   telemetry, minimal masks and checksums; mirror them locally and to D drive.
+2. **Run a 6-12 case resource micro-experiment:** include explicit local interruption
+   cases such as `10394779` plus representative long/thin, thick and high-voxel
+   scans. Compare only prespecified TotalSegmentator 2.18 muscle configurations and
+   keep inference serial. This is a separate immutable manifest, not an amendment
+   to the 255 cases.
+3. **Reconcile before inference:** match all 718 Paper1G IDs against Drive and D-drive
+   `stage2_v2_abdominal_muscles_thin`, the 717 thin muscle collection, existing
+   `total` masks and provenance. Verify readability, non-empty labels and anatomical
+   semantics. The historical 43 explicit-mask gaps are not evidence that 43 new
+   segmentations are still missing.
+4. **Generate a missing-only manifest:** run `abdominal_muscles` only for IDs proven
+   absent, corrupt or semantically unusable after step 3. If the verified count is
+   zero, omit this GPU stage entirely.
+5. **Move downstream extraction off the GPU:** compute corrected-slice total muscle,
+   erector, transversospinalis/paraspinal, HU and myosteatosis measures on standard
+   CPU/local storage, retaining old and new variables side by side.
+6. **Stop at decision gates:** Older-PCI no-coverage records, missing source NIfTI,
+   thoracic visual-QC failures and dormant NLST batches are separate projects. Do
+   not append them merely to consume a live High-RAM runtime; each needs a current
+   scientific priority, complete input manifest and its own output namespace.
+
+Current readiness snapshot: the 718 T12 CT inputs and 718 tissue masks are available;
+Drive records 718 Stage-2-v2 `abdominal_muscles` masks, while the thin muscle/radiomics
+line has 371 female_new + 346 legacy = 717 cases. These counts establish that broad
+erector re-segmentation is probably unnecessary, but they do not replace the ID-level
+checksum/readability/task-map reconciliation in step 3.
 
 ## 6. Paper boundaries
 
