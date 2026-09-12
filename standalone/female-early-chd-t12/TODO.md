@@ -1,8 +1,8 @@
 # T12 audit follow-up To Do
 
-Updated: 2026-09-11
+Updated: 2026-09-12
 
-This list starts after the active 718-case Paper1G T12 midpoint audit finishes. Do not interrupt the active batch to perform these items.
+The 718-case production pass is complete and frozen. The next Colab session is the isolated v1.2.0 selective rerun; it must not write into the completed full-run checkpoint or evidence files.
 
 ## 0. Done 2026-09-11 — runner no longer needs a public repository
 
@@ -17,7 +17,7 @@ The batch that was active when this change was made is unaffected: its Cell 1 ha
 
 Decided 2026-09-11 by 诸嵘. Policy: everything private except the personal site and pyobfus.
 
-- [ ] Confirm the 718-case batch has finished and its Drive records are preserved (§1 first item).
+- [x] Confirm the 718-case batch has finished and its Drive records are preserved (§1 first item; local + D-drive checksum-verified copies completed 2026-09-12).
 - [ ] Flip `zhurong2020/claude-colab-projects` to private.
 - [ ] In Colab, authorise GitHub private-repository access before reopening this notebook. The `colab.research.google.com/github/...` links do not work on a private repo until that is granted.
 - [ ] Re-run Cell 1 once and confirm it prints `Runner from Drive ...`, not the GitHub fallback.
@@ -30,7 +30,7 @@ Open question, not a blocker: this repository also holds a general Colab integra
 
 - [x] Preserve `results.csv`, all logs, session provenance, resource telemetry, active runner and manifest from Drive in the local gitignored final snapshot; generate SHA-256 inventory.
 - [x] Confirm 718 unique manifest IDs: 614 `SUCCESS`, 104 terminal `QC_ERROR`, 0 retryable `PROCESS_ERROR`.
-- [ ] Re-run only `PROCESS_ERROR` cases. Do not repeatedly run deterministic `QC_ERROR` cases.
+- [x] Confirm there are no `PROCESS_ERROR` cases to retry. Deterministic `QC_ERROR` cases enter the selective mask/adjudication workflow instead of blind retry.
 - [x] Add a deterministic case-level QC/rerun manifest builder covering QC errors, T12 identity disagreement, >=20% change tails and stratified controls. Generate the actual manifest from the frozen final snapshot before the next Colab run.
 - [ ] Re-run representative QC and prior local-earlyoom cases with 1-5 second RSS/PSS/GPU sampling and `--keep-work`.
 
@@ -122,6 +122,6 @@ selective rerun after the scalar checkpoint is complete:
 
 ## 7. Documentation closeout
 
-- [ ] Update `ASSET_AND_RUN_STATUS_20260911.md` with final outcome counts, elapsed time, CU estimate, resource peaks and Drive artifact checksums.
+- [x] Update `ASSET_AND_RUN_STATUS_20260911.md` with final outcome counts, backup locations, resource record summary and artifact checksums. Exact Colab CU consumption is not exposed in the exported run artifacts and must not be invented.
 - [ ] Record the selected muscle-mask definition and rejected alternatives after semantic review.
 - [ ] Mark completed checklist items with dated evidence links; do not delete historical decisions.
