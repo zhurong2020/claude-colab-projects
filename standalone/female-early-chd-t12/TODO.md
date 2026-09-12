@@ -6,7 +6,8 @@ The 718-case production pass is complete and frozen. The next Colab session is t
 
 ## Cold-start handoff after closing the 2026-09-12 session
 
-At 21:51 Asia/Shanghai, the active Colab selective run had 109/255 terminal rows
+This handoff has been superseded by the verified 2026-09-13 completion below. At
+21:51 Asia/Shanghai, the active Colab selective run had 109/255 terminal rows
 (66 `SUCCESS`, 43 `QC_ERROR`) and was processing ordinal 110. Drive held 110
 minimal-mask directories, consistent with 109 completed cases plus the active case.
 Mean completed-case time was 67.3 seconds and the snapshot ETA was about 2.7 hours.
@@ -71,6 +72,23 @@ Open question, not a blocker: this repository also holds a general Colab integra
       checkpoint during selective mode. The selective checkpoint itself is correct;
       only this monitor field is wrong. Use selective `results.csv` as progress SoT.
 
+### 1c. Selective closeout completed 2026-09-13
+
+- [x] Freeze and checksum the 255-case result, events, provenance, telemetry and
+      minimal-mask archive locally and on D drive (2,048 matches; zero differences).
+- [x] Reconcile 255 manifest/result/archive IDs and verify all 1,275 declared masks'
+      hashes and NIfTI readability.
+- [x] Summarise the 4.99-hour resource trace and preserve the raw 3,503 samples.
+- [ ] Fix the monitor checkpoint pointer before any future notebook version.
+- [ ] Run the separate 6-12-case local-interruption micro-experiment. Do not mix it
+      into the completed 255-case evidence set.
+- [x] Build and freeze the 12-case resource manifest, including `10394779` plus
+      high-PSS/long-runtime/large-input/long-z strata. Local SHA-256:
+      `c3fdaddd3b9547f98a2f8f3ec1cf9aa6569ed6c8c05c794e0a53ef74348a7980`;
+      Drive MD5 verified as `1d1f3c34f48620da34eda25f3546e5da`.
+- [x] Add notebook v1.2.1 `resource_micro` mode with a separate checkpoint/events/
+      minimal-mask namespace. Preparation is complete; no paid job was launched.
+
 ### 1a. Refined evidence design (decided 2026-09-12; do not interrupt the active batch)
 
 The active v1.1.0 process already has its runner and monitor loaded in memory. Do
@@ -128,10 +146,20 @@ be added to 718 as a new denominator.
 
 ## 2. Reconcile muscle assets before any new segmentation
 
-- [ ] Reconcile the 718 Paper1G IDs against the existing Drive/local `stage2_v2_abdominal_muscles_thin` inventory (reported 718/718, 727 MB) and its provenance sidecars.
+- [x] Reconcile the 718 Paper1G IDs against Drive/local
+      `stage2_v2_abdominal_muscles_thin`. Result: 716/718 current IDs have readable,
+      provenance-backed masks; Drive and D copies match. The apparent 718 count
+      included two unrelated extras and omitted `10304520`, `11412977`.
 - [ ] Reconcile against the existing `total` multilabel masks. The validated mapping records `autochthon_left/right` as labels 86/87; verify that these correspond to the intended Paper1A/Paper5 paraspinal definition before calling them erector spinae.
-- [ ] Generate a PHI-free machine-readable reconciliation table for the 43 historical explicit-mask gaps, including cohort branch, availability in each alternative mask inventory and final disposition.
-- [ ] Do not launch a 43-case `abdominal_muscles` rerun unless the two existing mask inventories fail checksum/readability/task-map QC.
+- [x] Generate a machine-readable reconciliation table under gitignored
+      `720cases/t12_audit/muscle_asset_reconciliation_20260913.csv` plus aggregate
+      JSON. It includes historical explicit-mask availability, Stage-2 presence,
+      provenance, checksum, readability and labels 15-18.
+- [x] Reject a 43-case broad rerun. The 43 historical gaps are all recovered by
+      Stage-2-v2, and its two absent current IDs both have historical bilateral
+      explicit masks: union coverage is 718/718. A two-case rerun is optional only
+      if uniform model/version becomes a prespecified requirement; do not launch it
+      automatically.
 
 ## 3. Recompute muscle measurements at the corrected T12 slice
 

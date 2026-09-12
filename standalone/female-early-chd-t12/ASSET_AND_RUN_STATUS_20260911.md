@@ -1,6 +1,6 @@
 # Paper1G T12 Colab asset and run status
 
-Last verified: 2026-09-11
+Last verified: 2026-09-13
 
 ## Scope and cohort
 
@@ -59,6 +59,36 @@ Drive root: `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/`
 - vbca: `docs/sessions/2026-05/20260529_stage2_v2_abd_complete_and_pull.md`
 
 Pending work is maintained separately in [`TODO.md`](TODO.md).
+
+## Selective-run completion and backup (2026-09-13)
+
+- The frozen 255-case subset completed: 151 `SUCCESS`, 104 deterministic
+  `QC_ERROR`, 0 `PROCESS_ERROR`. It is wholly contained in the prior 718 cases.
+- Final ID integrity is exact across manifest, checkpoint and 255 archive
+  directories. The 1,275 declared NIfTI files all pass their per-case SHA-256 and
+  readability checks. Empty masks are retained QC evidence: historical T12 84,
+  PP-T12 29, PP-L1 49 and PP-T11 4.
+- The local gitignored final snapshot is
+  `Female_Early_CHD/720cases/t12_audit/colab_state_backup/final_selective_255_20260913/`;
+  its D-drive mirror is
+  `/mnt/d/processed/internal/chen/t12_audit/female_early_chd_selective_255_20260913/`.
+  The two copies contain 2,048 matching files and zero checksum differences.
+- Five-second telemetry covers 4.99 hours/3,503 samples. Peak PSS/USS were
+  11.14/8.60 GiB, minimum available RAM 37.59 GiB and peak GPU memory 5,927 MiB.
+  High-RAM was comfortable; a cheaper tier still requires a controlled pilot.
+- The telemetry `checkpoint_rows=718` defect is confirmed to affect only that
+  monitor column. Final progress and status came from selective `results.csv`.
+
+## Muscle inventory correction (2026-09-13)
+
+Drive and D-drive Stage-2-v2 inventories are content-identical (723 data/sidecar
+files excluding the checkpoint). However, matching by the current 718 Paper1G IDs
+finds 716, not 718, usable `abdominal_muscles` masks. IDs `10304520` and `11412977`
+are absent; two unrelated extra IDs (`10950884`, `7219352`) had made the directory
+count look complete. Crucially, both missing Stage-2-v2 cases retain historical
+bilateral explicit erector masks, while all 43 historical explicit-mask gaps have
+readable Stage-2-v2 masks. The union is therefore 718/718. No missing-work GPU run
+is required unless a later analysis mandates one uniform model/version for all 718.
 
 ## Full-pass completion (2026-09-12)
 
