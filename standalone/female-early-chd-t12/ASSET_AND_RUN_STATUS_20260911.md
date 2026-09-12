@@ -59,3 +59,18 @@ Drive root: `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/`
 - vbca: `docs/sessions/2026-05/20260529_stage2_v2_abd_complete_and_pull.md`
 
 Pending work is maintained separately in [`TODO.md`](TODO.md).
+
+## Full-pass completion (2026-09-12)
+
+- The production pass reached 718/718 unique cases: 614 `SUCCESS`, 104 terminal
+  `QC_ERROR`, and no `PROCESS_ERROR`.
+- QC errors comprise 84 empty historical T12 masks, 9 no-overlap cases and 11
+  ambiguous-body-component cases. Among successes, 36/614 failed independent T12
+  identity agreement.
+- Drive output, all seven log files, the active runner and PHI-safe manifest were
+  backed up under the Female Early CHD gitignored final snapshot with SHA-256 sums.
+- The paired Paper1G primary estimate was essentially unchanged with old versus
+  new VFA. Anatomical adjudication remains required before promotion of new values.
+- `build_selective_rerun_manifest.py` now creates the deterministic rerun cohort:
+  all QC errors, all PP disagreements, all >=20% absolute VFA changes, optional
+  prior-interruption cases and 40 hash-selected stratified concordant controls.

@@ -28,10 +28,10 @@ Open question, not a blocker: this repository also holds a general Colab integra
 
 ## 1. Close and validate the active audit
 
-- [ ] Preserve `results.csv`, `case_task_events.jsonl`, session provenance and resource telemetry from Drive.
-- [ ] Confirm 718 unique manifest IDs and classify outcomes as `SUCCESS`, terminal `QC_ERROR`, or retryable `PROCESS_ERROR`.
+- [x] Preserve `results.csv`, all logs, session provenance, resource telemetry, active runner and manifest from Drive in the local gitignored final snapshot; generate SHA-256 inventory.
+- [x] Confirm 718 unique manifest IDs: 614 `SUCCESS`, 104 terminal `QC_ERROR`, 0 retryable `PROCESS_ERROR`.
 - [ ] Re-run only `PROCESS_ERROR` cases. Do not repeatedly run deterministic `QC_ERROR` cases.
-- [ ] Produce a case-level QC queue for empty historical T12 masks, ambiguous body components and T12 identity disagreement.
+- [x] Add a deterministic case-level QC/rerun manifest builder covering QC errors, T12 identity disagreement, >=20% change tails and stratified controls. Generate the actual manifest from the frozen final snapshot before the next Colab run.
 - [ ] Re-run representative QC and prior local-earlyoom cases with 1-5 second RSS/PSS/GPU sampling and `--keep-work`.
 
 ### 1a. Refined evidence design (decided 2026-09-12; do not interrupt the active batch)
