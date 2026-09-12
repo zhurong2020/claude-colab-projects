@@ -4,6 +4,33 @@ Updated: 2026-09-12
 
 The 718-case production pass is complete and frozen. The next Colab session is the isolated v1.2.0 selective rerun; it must not write into the completed full-run checkpoint or evidence files.
 
+## Cold-start handoff after closing the 2026-09-12 session
+
+At 21:51 Asia/Shanghai, the active Colab selective run had 109/255 terminal rows
+(66 `SUCCESS`, 43 `QC_ERROR`) and was processing ordinal 110. Drive held 110
+minimal-mask directories, consistent with 109 completed cases plus the active case.
+Mean completed-case time was 67.3 seconds and the snapshot ETA was about 2.7 hours.
+This is a timestamped snapshot, not a completion claim.
+
+On the next Codex cold start, do these actions first, in order:
+
+1. Query Drive `selective_qc_20260912/results.csv`, the last task event, current
+   minimal-mask directory count and the session telemetry timestamp. Do not use the
+   known-bad v1.2.0 telemetry `checkpoint_rows` field.
+2. If fewer than 255 terminal rows and events are still advancing, leave Colab alone
+   and report the new ETA. If progress is stale, inspect the final task event and
+   Colab runtime state before deciding whether checkpoint resume is required.
+3. If 255/255 is complete, immediately freeze the selective checkpoint, events,
+   provenance, telemetry, resource summary and minimal-mask tree to a new local
+   gitignored snapshot; generate hashes; then mirror and checksum-verify it on D drive.
+4. Reconcile row IDs, mask-directory IDs and the frozen 255-row manifest; classify
+   SUCCESS/QC/PROCESS_ERROR, missing archives and termination signals. Only after
+   this integrity gate should anatomical review material or downstream work begin.
+5. Start §5a's conditional serial closeout queue: first the 6-12 case explicit
+   local-interruption resource micro-run, then ID/checksum/readability/task-map
+   reconciliation of existing muscle assets, and only then a missing-only GPU
+   manifest if any true gap remains. Do not create a broad erector rerun by default.
+
 ## 0. Done 2026-09-11 — runner no longer needs a public repository
 
 - [x] Upload `run_t12_audit.py` to `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/assets/` (md5 `263a5317eb506084ec5f604c80db2380`, verified against the repository copy).
