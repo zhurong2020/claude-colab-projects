@@ -33,6 +33,16 @@ Open question, not a blocker: this repository also holds a general Colab integra
 - [x] Confirm there are no `PROCESS_ERROR` cases to retry. Deterministic `QC_ERROR` cases enter the selective mask/adjudication workflow instead of blind retry.
 - [x] Add a deterministic case-level QC/rerun manifest builder covering QC errors, T12 identity disagreement, >=20% change tails and stratified controls. Generate the actual manifest from the frozen final snapshot before the next Colab run.
 - [ ] Re-run representative QC and prior local-earlyoom cases with 1-5 second RSS/PSS/GPU sampling and `--keep-work`.
+- [x] Launch the frozen 255-record selective run and verify independent checkpoint,
+      events, five-mask archive plus per-case logs/checksums, and 5-second telemetry
+      on Drive (verified after nine terminal records on 2026-09-12).
+- [ ] After the active run, create a separate immutable micro-manifest for explicit
+      local interruption/resource-reproduction cases. The current 255-row manifest
+      contains no explicit `prior_interruption` reason and excludes `10394779`; do
+      not edit a running manifest.
+- [ ] Fix v1.2.0 telemetry `checkpoint_rows`: it reports 718 from the frozen full-run
+      checkpoint during selective mode. The selective checkpoint itself is correct;
+      only this monitor field is wrong. Use selective `results.csv` as progress SoT.
 
 ### 1a. Refined evidence design (decided 2026-09-12; do not interrupt the active batch)
 
@@ -65,9 +75,10 @@ standard.
 Because v1.1.0 deletes case work directories, create the review archive by a
 selective rerun after the scalar checkpoint is complete:
 
-- [ ] Retain **all** `QC_ERROR` cases, all `pp_t12_agreement=0` cases, all positive
-      pairs in the extreme tails of slice/VFA change, and all prior local earlyoom
-      test cases.
+- [x] Freeze all `QC_ERROR` cases, all `pp_t12_agreement=0` cases, all positive
+      pairs with absolute relative VFA change >=20%, and 40 controls (255 unique;
+      one overlap). Explicit local earlyoom cases were not supplied and remain a
+      separate micro-run TODO.
 - [ ] Before inspecting images, select a deterministic hash-based stratified sample
       of apparently concordant cases across cohort source, scanner/geometry strata,
       stenosis group and scan-length bands. Freeze its manifest and hash.

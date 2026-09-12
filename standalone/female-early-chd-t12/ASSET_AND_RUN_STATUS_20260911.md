@@ -77,3 +77,26 @@ Pending work is maintained separately in [`TODO.md`](TODO.md).
 - `build_selective_rerun_manifest.py` now creates the deterministic rerun cohort:
   all QC errors, all PP disagreements, all >=20% absolute VFA changes, optional
   prior-interruption cases and 40 hash-selected stratified concordant controls.
+
+## Selective-run launch verification (2026-09-12)
+
+- The frozen manifest contains 255 unique records: 104 `qc_error`, 76 absolute
+  relative VFA changes >=20%, 36 PP disagreements and 40 hash-stratified controls;
+  one record belongs to both the extreme-change and PP-disagreement groups.
+- No explicit prior-interruption record was supplied when this manifest was built.
+  In particular, local interruption case `10394779` is not among the 255 because its
+  completed full-pass result was PP-concordant with shift 1 mm and relative VFA
+  change +0.78%. Preserve the active manifest; test this case later in a separate
+  resource-reproduction micro-run rather than changing the cohort mid-run.
+- Live Drive verification after the first nine terminal records found nine matching
+  minimal-mask directories. Each includes the historical T12 mask, new body mask,
+  PP T11/T12/L1 masks, task logs and a SHA-256 inventory. A repeated `QC_ERROR`
+  after both tasks return code 0 is expected when the deterministic anatomical QC
+  rule rejects the masks; the rerun's purpose is evidence retention, not forced
+  conversion to `SUCCESS`.
+- Session-specific 5-second RSS/PSS/USS/GPU telemetry, provenance and task events
+  are being mirrored successfully. Known non-blocking defect: its `checkpoint_rows`
+  column reads the frozen full-pass count (718) instead of the selective checkpoint
+  count. Use `selective_qc_20260912/results.csv` for live progress. Other telemetry
+  fields and case/task joins are valid; correct this pointer only in the next
+  notebook version, without interrupting or modifying the active run.
