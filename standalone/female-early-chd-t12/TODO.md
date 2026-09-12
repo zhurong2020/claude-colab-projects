@@ -9,7 +9,7 @@ This list starts after the active 718-case Paper1G T12 midpoint audit finishes. 
 - [x] Upload `run_t12_audit.py` to `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/assets/` (md5 `263a5317eb506084ec5f604c80db2380`, verified against the repository copy).
 - [x] Notebook v1.1.2 reads the runner from that Drive asset and prints source plus sha256; the GitHub raw URL is now only a fallback.
 - [x] Correct the README, which still described the runner as coming from Drive after v1.1.1 had moved it to GitHub.
-- [ ] When `run_t12_audit.py` changes, re-upload it to Drive. Cell 1 prefers the Drive asset and will otherwise keep running the older copy.
+- [x] Re-upload v1.2.0 `run_t12_audit.py` to Drive (2026-09-12; md5 `6494df1a94f94158b9134b5287ecb49c`, verified after upload). The active v1.1.0 Cell 6 continues from its already-loaded `/content` copy; the new runner applies only after reconnect/restart.
 
 The batch that was active when this change was made is unaffected: its Cell 1 had already downloaded the runner to `/content`, and Cell 6 launches that local path without touching the network. The change takes effect on the next Cell 1 run.
 
@@ -33,6 +33,52 @@ Open question, not a blocker: this repository also holds a general Colab integra
 - [ ] Re-run only `PROCESS_ERROR` cases. Do not repeatedly run deterministic `QC_ERROR` cases.
 - [ ] Produce a case-level QC queue for empty historical T12 masks, ambiguous body components and T12 identity disagreement.
 - [ ] Re-run representative QC and prior local-earlyoom cases with 1-5 second RSS/PSS/GPU sampling and `--keep-work`.
+
+### 1a. Refined evidence design (decided 2026-09-12; do not interrupt the active batch)
+
+The active v1.1.0 process already has its runner and monitor loaded in memory. Do
+not restart it merely to improve telemetry. Its 30-second process-tree RSS series
+remains an operational record, but RPR-01 has shown that RSS sums can double-count
+shared pages and that this interval can miss short peaks. It is not a memory gold
+standard.
+
+- [ ] For the selective post-run reruns, sample every **1-5 seconds** and record,
+      side by side: process count, root RSS, process-tree RSS sum, process-tree PSS
+      sum, process-tree USS sum, system available RAM, GPU utilisation/allocated
+      memory, scratch usage and checkpoint count. Preserve the metric definitions.
+- [ ] Add `session_id`, monotonic elapsed time, active `case_id`, active task and
+      sample sequence to telemetry so samples can be joined deterministically to
+      `case_task_events.jsonl` across Colab reconnects.
+- [ ] Write high-frequency samples to Colab local disk first and atomically mirror
+      them to Drive every 30-60 seconds plus at every task/case boundary. This limits
+      Drive-FUSE overhead while bounding telemetry loss after runtime reclamation.
+- [ ] Extend task events with input shape, voxel spacing, input bytes, CT staging
+      seconds, inference seconds, measurement/QC seconds, cleanup seconds, return
+      code and termination signal where available. Derive per-case resource peaks
+      by timestamp join; do not estimate them from console text.
+- [ ] Record explicitly that Colab dashboard/system RAM and PSS are feasible
+      telemetry, not cgroup kernel gold standards. Do not use this production run
+      as an independent accuracy-validation arm in RPR-01.
+
+### 1b. Prespecified mask/QC retention sample
+
+Because v1.1.0 deletes case work directories, create the review archive by a
+selective rerun after the scalar checkpoint is complete:
+
+- [ ] Retain **all** `QC_ERROR` cases, all `pp_t12_agreement=0` cases, all positive
+      pairs in the extreme tails of slice/VFA change, and all prior local earlyoom
+      test cases.
+- [ ] Before inspecting images, select a deterministic hash-based stratified sample
+      of apparently concordant cases across cohort source, scanner/geometry strata,
+      stenosis group and scan-length bands. Freeze its manifest and hash.
+- [ ] Archive only the source T12 label, `vertebrae_body.nii.gz`, the relevant
+      `vertebrae_pp` T11/T12/L1 masks, compact task logs, review image and checksums;
+      do not upload every C1-L5 output by default.
+- [ ] Have the anatomical reader adjudicate level identity and midpoint suitability
+      without seeing coronary group or old/new VFA change. Use this as the reference
+      for the T12 methods study; model agreement alone is not ground truth.
+- [ ] Report failure and disagreement denominators separately. A successfully
+      executed task is not automatically an anatomically valid measurement.
 
 ## 2. Reconcile muscle assets before any new segmentation
 
@@ -70,6 +116,9 @@ Open question, not a blocker: this repository also holds a general Colab integra
 - [ ] Paper1G: complete corrected T12 VFA audit/refit gate; muscle is not a required current-model covariate.
 - [ ] Paper1A/Paper5/radiomics: require corrected-slice muscle reconciliation before using a new unified body-composition dataset.
 - [ ] Preserve the 720-source/718-analysis distinction and the malignancy-lock exclusions in every derived manifest.
+- [ ] T12 methods paper may cite RPR-01 for memory-measurement limitations; RPR-01
+      may use this campaign as a disclosed real-world workload. Shared run records
+      must not be counted as independent validation in both papers.
 
 ## 7. Documentation closeout
 

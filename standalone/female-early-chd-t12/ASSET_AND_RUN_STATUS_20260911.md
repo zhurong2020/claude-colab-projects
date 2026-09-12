@@ -29,6 +29,7 @@ Last verified: 2026-09-11
 - `SUCCESS` and deterministic `QC_ERROR` records are terminal; `PROCESS_ERROR` is retryable.
 - The active v1.1.0 runner deletes successful and QC per-case scratch directories after checkpointing. Newly generated `vertebrae_body` and `vertebrae_pp` masks are therefore not retained on Drive.
 - This does not prevent corrected-slice fat or muscle measurement because the scalar `new_slice`, original CT and existing tissue masks are sufficient. Mask-level review cases must be rerun selectively with retention enabled.
+- Notebook/runner v1.2.0 was prepared on 2026-09-12 for the next reconnect and selective reruns. It adds session-linked 5-second RSS/PSS/USS telemetry, process count, active case/task state, stage/measurement/cleanup timing and opt-in minimal T12 mask archiving. It does not alter the already-loaded v1.1.0 process or its checkpoint semantics.
 - Notebook v1.1.1 fixes Drive telemetry durability by closing the telemetry file after every 30-second sample. It applies to future sessions and does not alter the already-running v1.1.0 process.
 
 ## Confirmed local earlyoom incident
