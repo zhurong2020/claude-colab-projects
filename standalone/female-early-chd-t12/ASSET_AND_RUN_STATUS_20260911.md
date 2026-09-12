@@ -69,6 +69,9 @@ Pending work is maintained separately in [`TODO.md`](TODO.md).
   identity agreement.
 - Drive output, all seven log files, the active runner and PHI-safe manifest were
   backed up under the Female Early CHD gitignored final snapshot with SHA-256 sums.
+- The same 12-file snapshot was copied to the active D drive at
+  `/mnt/d/processed/internal/chen/t12_audit/female_early_chd_718_20260912/`;
+  an rclone checksum comparison found 12/12 matches and zero differences.
 - The paired Paper1G primary estimate was essentially unchanged with old versus
   new VFA. Anatomical adjudication remains required before promotion of new values.
 - `build_selective_rerun_manifest.py` now creates the deterministic rerun cohort:
