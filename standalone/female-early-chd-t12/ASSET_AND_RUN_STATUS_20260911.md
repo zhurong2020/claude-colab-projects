@@ -12,7 +12,7 @@ Last verified: 2026-09-13
 
 - The historical pipeline used TotalSegmentator v2.12.0 tasks `total`, `tissue_4_types`, and `abdominal_muscles`.
 - The current audit uses TotalSegmentator v2.18.0 `vertebrae_body` plus `vertebrae_pp` to derive a body-centered slice and independently arbitrate T12 identity.
-- Paper1G currently uses corrected T12 visceral-fat area as an adjustment variable. Muscle is not a required covariate in the current Paper1G model.
+- Paper1G's locked primary analysis uses the historical T12 visceral-fat area as an adjustment variable. The corrected value is a sensitivity-analysis sidecar; muscle is not a required covariate in the current Paper1G model.
 
 ## Muscle asset findings
 
@@ -77,8 +77,10 @@ Pending work is maintained separately in [`TODO.md`](TODO.md).
   identical complete cases the M3 TSH OR per doubling was 1.374 with historical VFA
   and 1.375 with corrected VFA. Paper1G's inference is robust, but wide agreement
   limits and 69 quartile movements mean the measurements are not interchangeable.
-- The remaining blocking gate is human review of the blinded 255-case anatomical
-  panel/form package. No further paid Colab inference is currently indicated.
+- Paper1G's technical sensitivity gate is complete and does not wait for human
+  review. The blinded 255-case panel/form package is a conditional gate only for
+  corrected-field promotion or a separately authorized T12 methods study. No
+  further paid Colab inference is currently indicated.
 
 ## Selective-run completion and backup (2026-09-13)
 

@@ -41,7 +41,7 @@ Drive; it does not amend or overwrite the completed 255-case evidence. The v1.2.
 selective telemetry's stale `checkpoint_rows=718` field is retained as historical
 evidence; v1.2.1 passes each selected mode's checkpoint to the monitor.
 
-Verified cohort, muscle-asset, mask-retention and earlyoom findings are recorded in [`ASSET_AND_RUN_STATUS_20260911.md`](ASSET_AND_RUN_STATUS_20260911.md). Drive readiness and no-duplicate-upload decisions are in [`GDRIVE_HIGH_RESOURCE_READINESS_20260913.md`](GDRIVE_HIGH_RESOURCE_READINESS_20260913.md). Remaining adjudication, corrected-slice muscle work and CU-efficient scheduling are tracked in [`TODO.md`](TODO.md).
+Verified cohort, muscle-asset, mask-retention and earlyoom findings are recorded in [`ASSET_AND_RUN_STATUS_20260911.md`](ASSET_AND_RUN_STATUS_20260911.md). Drive readiness and no-duplicate-upload decisions are in [`GDRIVE_HIGH_RESOURCE_READINESS_20260913.md`](GDRIVE_HIGH_RESOURCE_READINESS_20260913.md). Completed corrected-slice work, conditional future adjudication and the still-open RPR-01 positioning decision are tracked in [`TODO.md`](TODO.md).
 
 The runtime is pinned to TotalSegmentator 2.18.0, matching the locally validated environment. Startup checks require both `vertebrae_body` and `vertebrae_pp` before the smoke test begins; older releases such as 2.11.0 do not expose `vertebrae_pp`.
 

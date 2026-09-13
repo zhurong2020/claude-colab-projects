@@ -5,7 +5,9 @@ Updated: 2026-09-13
 The 718-case production, 255-case evidence-retention pass and 12-case resource
 micro-run are complete and frozen in separate namespaces. No further paid Colab
 run is currently indicated. The planned local CPU analyses are also complete; the
-definitive T12 gate now requires blinded human anatomical adjudication.
+Paper1G's technical sensitivity gate is complete. Blinded human anatomical
+adjudication is deferred unless corrected fields are promoted or a separate T12
+methods study is authorized.
 
 ## 2026-09-13 current priority gate
 
@@ -19,15 +21,17 @@ definitive T12 gate now requires blinded human anatomical adjudication.
       explicit bilateral masks plus Stage2-v2 cover 718/718; no broad GPU rerun is
       warranted.
 - [x] Complete the generated 255-case blinded panel/form package and its D-drive
-      checksum mirror; human anatomical reading remains a manual gate.
+      checksum mirror; human reading is an optional future promotion/methods gate,
+      not a Paper1G submission gate.
 - [x] Freeze and QC the local CPU corrected-slice muscle sidecar. Legacy Stage2
       masks are thin-series geometry and must be sampled by physical-coordinate
       mapping from the thick audit slice, never by copying the slice index.
 - [x] Run the pre-adjudication VFA agreement and identical-complete-case Paper1G
       refit: 612 positive pairs, ICC(2,1)=0.9796; paired M3 TSH OR 1.374 old vs
       1.375 corrected. Do not promote corrected values until reader adjudication.
-- [ ] After reader adjudication, freeze the definitive VFA field/dispositions and
-      rerun all VFA-dependent models. This is the remaining scientific gate.
+- [ ] If corrected-field promotion or a separate T12 methods study is authorized,
+      complete reader adjudication, freeze dispositions and rerun affected models.
+      Keep this conditional; do not block Paper1G.
 
 ## Cold-start handoff after closing the 2026-09-12 session
 
@@ -248,12 +252,17 @@ checksum/readability/task-map reconciliation in step 3.
 
 ## 6. Paper boundaries
 
-- [ ] Paper1G: complete corrected T12 VFA audit/refit gate; muscle is not a required current-model covariate.
+- [x] Paper1G: corrected T12 VFA sensitivity audit/refit gate is complete; retain
+      the locked historical VFA for the clinical TSH manuscript. Muscle is not a
+      required current-model covariate, and reader adjudication is not a submission gate.
 - [ ] Paper1A/Paper5/radiomics: require corrected-slice muscle reconciliation before using a new unified body-composition dataset.
 - [ ] Preserve the 720-source/718-analysis distinction and the malignancy-lock exclusions in every derived manifest.
-- [ ] T12 methods paper may cite RPR-01 for memory-measurement limitations; RPR-01
-      may use this campaign as a disclosed real-world workload. Shared run records
-      must not be counted as independent validation in both papers.
+- [ ] Discuss and freeze RPR-01's final positioning. It began with comparisons of
+      TotalSegmentator execution configurations; the preferred candidate framing
+      combines valid resource measurement, configuration effects, output fidelity
+      and the T12 campaign as a disclosed real-world workload. A separate T12
+      methods paper is not yet authorized, and shared records must not be counted
+      as independent validation across manuscripts.
 
 ## 7. Documentation closeout
 
