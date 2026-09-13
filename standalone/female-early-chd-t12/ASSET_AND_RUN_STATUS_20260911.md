@@ -60,6 +60,26 @@ Drive root: `MyDrive/cardiac_colab/t12_midpoint_audit_20260911/`
 
 Pending work is maintained separately in [`TODO.md`](TODO.md).
 
+## Resource micro-run and local CPU closeout (2026-09-13)
+
+- Notebook v1.2.1's isolated resource namespace completed 12/12 (8 SUCCESS, 4
+  deterministic QC_ERROR, 0 process errors) and was checksum-preserved locally and
+  on D drive. It does not alter either frozen 718- or 255-case result.
+- Case `10394779` peaked at 16.25 GiB process-tree PSS and 14.21 GiB USS. Together
+  with the local 18-GiB host's 20% earlyoom boundary, this supports host-memory
+  intervention rather than CUDA OOM. Summed RSS is retained only as an operational
+  metric because it double-counts shared pages.
+- CPU corrected-slice muscle extraction produced 612 uniform Stage2-v2 records,
+  104 audit-QC records with no corrected slice, and 2 explicitly named historical
+  erector fallbacks; there were no process errors. Of the 612, 177 legacy thin-mask
+  planes required affine/world-coordinate mapping from the thick audit series.
+- The pre-adjudication VFA gate found ICC(2,1)=0.9796 in 612 positive pairs. On 499
+  identical complete cases the M3 TSH OR per doubling was 1.374 with historical VFA
+  and 1.375 with corrected VFA. Paper1G's inference is robust, but wide agreement
+  limits and 69 quartile movements mean the measurements are not interchangeable.
+- The remaining blocking gate is human review of the blinded 255-case anatomical
+  panel/form package. No further paid Colab inference is currently indicated.
+
 ## Selective-run completion and backup (2026-09-13)
 
 - The frozen 255-case subset completed: 151 `SUCCESS`, 104 deterministic

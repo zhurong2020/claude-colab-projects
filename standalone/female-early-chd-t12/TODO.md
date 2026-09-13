@@ -1,8 +1,33 @@
 # T12 audit follow-up To Do
 
-Updated: 2026-09-12
+Updated: 2026-09-13
 
-The 718-case production pass is complete and frozen. The next Colab session is the isolated v1.2.0 selective rerun; it must not write into the completed full-run checkpoint or evidence files.
+The 718-case production, 255-case evidence-retention pass and 12-case resource
+micro-run are complete and frozen in separate namespaces. No further paid Colab
+run is currently indicated. The planned local CPU analyses are also complete; the
+definitive T12 gate now requires blinded human anatomical adjudication.
+
+## 2026-09-13 current priority gate
+
+- [x] Complete and preserve the 255-case selective run: 151 SUCCESS, 104 QC_ERROR,
+      0 process errors; 1,275 masks passed hash/readability checks.
+- [x] Complete and preserve notebook v1.2.1's frozen 12-case resource run: 8
+      SUCCESS, 4 QC_ERROR, 0 process errors. Case `10394779` reached 16.25 GiB PSS
+      and 14.21 GiB USS, supporting local earlyoom host-memory intervention rather
+      than CUDA OOM.
+- [x] Reconcile muscle assets by ID, provenance, readability and labels. Historical
+      explicit bilateral masks plus Stage2-v2 cover 718/718; no broad GPU rerun is
+      warranted.
+- [x] Complete the generated 255-case blinded panel/form package and its D-drive
+      checksum mirror; human anatomical reading remains a manual gate.
+- [x] Freeze and QC the local CPU corrected-slice muscle sidecar. Legacy Stage2
+      masks are thin-series geometry and must be sampled by physical-coordinate
+      mapping from the thick audit slice, never by copying the slice index.
+- [x] Run the pre-adjudication VFA agreement and identical-complete-case Paper1G
+      refit: 612 positive pairs, ICC(2,1)=0.9796; paired M3 TSH OR 1.374 old vs
+      1.375 corrected. Do not promote corrected values until reader adjudication.
+- [ ] After reader adjudication, freeze the definitive VFA field/dispositions and
+      rerun all VFA-dependent models. This is the remaining scientific gate.
 
 ## Cold-start handoff after closing the 2026-09-12 session
 
@@ -60,15 +85,15 @@ Open question, not a blocker: this repository also holds a general Colab integra
 - [x] Confirm 718 unique manifest IDs: 614 `SUCCESS`, 104 terminal `QC_ERROR`, 0 retryable `PROCESS_ERROR`.
 - [x] Confirm there are no `PROCESS_ERROR` cases to retry. Deterministic `QC_ERROR` cases enter the selective mask/adjudication workflow instead of blind retry.
 - [x] Add a deterministic case-level QC/rerun manifest builder covering QC errors, T12 identity disagreement, >=20% change tails and stratified controls. Generate the actual manifest from the frozen final snapshot before the next Colab run.
-- [ ] Re-run representative QC and prior local-earlyoom cases with 1-5 second RSS/PSS/GPU sampling and `--keep-work`.
+- [x] Re-run representative QC and prior local-earlyoom cases with 1-5 second RSS/PSS/GPU sampling and retained minimal masks (v1.2.1 resource micro-run).
 - [x] Launch the frozen 255-record selective run and verify independent checkpoint,
       events, five-mask archive plus per-case logs/checksums, and 5-second telemetry
       on Drive (verified after nine terminal records on 2026-09-12).
-- [ ] After the active run, create a separate immutable micro-manifest for explicit
+- [x] After the active run, create a separate immutable micro-manifest for explicit
       local interruption/resource-reproduction cases. The current 255-row manifest
       contains no explicit `prior_interruption` reason and excludes `10394779`; do
       not edit a running manifest.
-- [ ] Fix v1.2.0 telemetry `checkpoint_rows`: it reports 718 from the frozen full-run
+- [x] Fix v1.2.0 telemetry `checkpoint_rows`: v1.2.1 uses the active mode checkpoint
       checkpoint during selective mode. The selective checkpoint itself is correct;
       only this monitor field is wrong. Use selective `results.csv` as progress SoT.
 
@@ -79,8 +104,8 @@ Open question, not a blocker: this repository also holds a general Colab integra
 - [x] Reconcile 255 manifest/result/archive IDs and verify all 1,275 declared masks'
       hashes and NIfTI readability.
 - [x] Summarise the 4.99-hour resource trace and preserve the raw 3,503 samples.
-- [ ] Fix the monitor checkpoint pointer before any future notebook version.
-- [ ] Run the separate 6-12-case local-interruption micro-experiment. Do not mix it
+- [x] Fix the monitor checkpoint pointer before any future notebook version.
+- [x] Run the separate 12-case local-interruption micro-experiment. It remains
       into the completed 255-case evidence set.
 - [x] Build and freeze the 12-case resource manifest, including `10394779` plus
       high-PSS/long-runtime/large-input/long-z strata. Local SHA-256:
@@ -97,21 +122,21 @@ remains an operational record, but RPR-01 has shown that RSS sums can double-cou
 shared pages and that this interval can miss short peaks. It is not a memory gold
 standard.
 
-- [ ] For the selective post-run reruns, sample every **1-5 seconds** and record,
+- [x] For the selective post-run reruns, sample every **1-5 seconds** and record,
       side by side: process count, root RSS, process-tree RSS sum, process-tree PSS
       sum, process-tree USS sum, system available RAM, GPU utilisation/allocated
       memory, scratch usage and checkpoint count. Preserve the metric definitions.
-- [ ] Add `session_id`, monotonic elapsed time, active `case_id`, active task and
+- [x] Add `session_id`, monotonic elapsed time, active `case_id`, active task and
       sample sequence to telemetry so samples can be joined deterministically to
       `case_task_events.jsonl` across Colab reconnects.
-- [ ] Write high-frequency samples to Colab local disk first and atomically mirror
+- [x] Write high-frequency samples to Colab local disk first and atomically mirror
       them to Drive every 30-60 seconds plus at every task/case boundary. This limits
       Drive-FUSE overhead while bounding telemetry loss after runtime reclamation.
-- [ ] Extend task events with input shape, voxel spacing, input bytes, CT staging
+- [x] Extend task events with input shape, voxel spacing, input bytes, CT staging
       seconds, inference seconds, measurement/QC seconds, cleanup seconds, return
       code and termination signal where available. Derive per-case resource peaks
       by timestamp join; do not estimate them from console text.
-- [ ] Record explicitly that Colab dashboard/system RAM and PSS are feasible
+- [x] Record explicitly that Colab dashboard/system RAM and PSS are feasible
       telemetry, not cgroup kernel gold standards. Do not use this production run
       as an independent accuracy-validation arm in RPR-01.
 
@@ -135,7 +160,7 @@ be added to 718 as a new denominator.
 - [ ] Before inspecting images, select a deterministic hash-based stratified sample
       of apparently concordant cases across cohort source, scanner/geometry strata,
       stenosis group and scan-length bands. Freeze its manifest and hash.
-- [ ] Archive only the source T12 label, `vertebrae_body.nii.gz`, the relevant
+- [x] Archive only the source T12 label, `vertebrae_body.nii.gz`, the relevant
       `vertebrae_pp` T11/T12/L1 masks, compact task logs, review image and checksums;
       do not upload every C1-L5 output by default.
 - [ ] Have the anatomical reader adjudicate level identity and midpoint suitability
@@ -163,18 +188,18 @@ be added to 718 as a new denominator.
 
 ## 3. Recompute muscle measurements at the corrected T12 slice
 
-- [ ] Use the audit `new_slice`, not the historical whole-vertebra midpoint.
-- [ ] Recompute total skeletal-muscle area/density from the existing 718/718 `tissue_4types_skeletal_muscle` masks.
-- [ ] After semantic sign-off, recompute left/right paraspinal area, combined area, HU, LAM/NAM and myosteatosis measures from an existing validated mask source.
-- [ ] Keep old and corrected-slice variables side by side; never overwrite V5.2-V5.2.4.
-- [ ] Freeze a dated derived table, data dictionary, mask provenance and QC report before Paper1A/Paper5/radiomics reuse.
+- [x] Use the audit `new_slice`, not the historical whole-vertebra midpoint.
+- [x] Recompute total skeletal-muscle area/density where an adjudicable corrected slice exists.
+- [ ] After semantic sign-off, select erector labels 15/16 alone versus the broader paraspinal 15-18 union for Paper1A/Paper5 promotion. Both candidate sets are already in the sidecar.
+- [x] Keep old and corrected-slice variables side by side; never overwrite V5.2-V5.2.4.
+- [x] Freeze a dated pre-adjudication derived table, provenance and QC report. Final promotion remains reader/signoff gated.
 
 ## 4. Mask-retention policy
 
-- [ ] Record that the active notebook v1.1.0 deletes successful per-case `vertebrae_body` and `vertebrae_pp` scratch directories after checkpointing; it does not persist newly generated masks to Drive.
-- [ ] Treat the scalar `new_slice` and audit fields as sufficient for routine corrected-slice tissue measurement using existing tissue/muscle masks.
-- [ ] For QC errors, T12-disagreement cases and a representative validation sample, rerun with `--keep-work` and archive `vertebrae_body.nii.gz`, `vertebrae_pp/vertebrae_T12.nii.gz`, task logs and checksums.
-- [ ] Before any future full inference, add an opt-in minimal-mask archive mode that retains only the two T12-relevant masks. Do not upload all C1-L5 `vertebrae_pp` files unless a defined analysis requires them.
+- [x] Record that the full-pass notebook deletes successful per-case scratch masks; the selective and micro namespaces retain minimal evidence instead.
+- [x] Treat the scalar `new_slice` and audit fields as sufficient for routine corrected-slice tissue measurement using existing tissue/muscle masks.
+- [x] For QC errors, T12-disagreement cases and representative controls, retain T12-relevant masks, task logs and checksums in the frozen 255-case package.
+- [x] Add and exercise opt-in minimal-mask archive mode; it retains historical T12, body and PP T11/T12/L1 rather than all C1-L5 outputs.
 
 ## 5. Compute-unit and session strategy
 
