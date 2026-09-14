@@ -1,6 +1,6 @@
 # T12 audit follow-up To Do
 
-Updated: 2026-09-13
+Updated: 2026-09-15
 
 The 718-case production, 255-case evidence-retention pass and 12-case resource
 micro-run are complete and frozen in separate namespaces. No further paid Colab
@@ -33,7 +33,7 @@ methods study is authorized.
       complete reader adjudication, freeze dispositions and rerun affected models.
       Keep this conditional; do not block Paper1G.
 
-## Cold-start handoff after closing the 2026-09-12 session
+## Superseded running-state handoff from 2026-09-12
 
 This handoff has been superseded by the verified 2026-09-13 completion below. At
 21:51 Asia/Shanghai, the active Colab selective run had 109/255 terminal rows
@@ -42,24 +42,10 @@ minimal-mask directories, consistent with 109 completed cases plus the active ca
 Mean completed-case time was 67.3 seconds and the snapshot ETA was about 2.7 hours.
 This is a timestamped snapshot, not a completion claim.
 
-On the next Codex cold start, do these actions first, in order:
-
-1. Query Drive `selective_qc_20260912/results.csv`, the last task event, current
-   minimal-mask directory count and the session telemetry timestamp. Do not use the
-   known-bad v1.2.0 telemetry `checkpoint_rows` field.
-2. If fewer than 255 terminal rows and events are still advancing, leave Colab alone
-   and report the new ETA. If progress is stale, inspect the final task event and
-   Colab runtime state before deciding whether checkpoint resume is required.
-3. If 255/255 is complete, immediately freeze the selective checkpoint, events,
-   provenance, telemetry, resource summary and minimal-mask tree to a new local
-   gitignored snapshot; generate hashes; then mirror and checksum-verify it on D drive.
-4. Reconcile row IDs, mask-directory IDs and the frozen 255-row manifest; classify
-   SUCCESS/QC/PROCESS_ERROR, missing archives and termination signals. Only after
-   this integrity gate should anatomical review material or downstream work begin.
-5. Start §5a's conditional serial closeout queue: first the 6-12 case explicit
-   local-interruption resource micro-run, then ID/checksum/readability/task-map
-   reconciliation of existing muscle assets, and only then a missing-only GPU
-   manifest if any true gap remains. Do not create a broad erector rerun by default.
+All five actions above were completed on 2026-09-13. On a new cold start, do not
+resume or repeat the paid Colab workflow. Read the completion gate at the top of this
+file, then continue either the Paper1G package-regeneration route or RPR-01 scope
+decision. Re-query Drive only when verifying preservation, not to infer an active run.
 
 ## 0. Done 2026-09-11 — runner no longer needs a public repository
 
